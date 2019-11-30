@@ -17,7 +17,7 @@ import { User } from './User';
 import { Course } from './Course';
 import { Notfound } from './NotFound';
 
-export const admin = 'admin';
+export const admin = 'admin@muni.cz';
 export const adminPassword = '123';
 
 const ourTheme = createMuiTheme({
