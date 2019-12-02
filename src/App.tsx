@@ -14,7 +14,7 @@ import { Login } from './Login';
 import { About } from './About';
 import { Home } from './Home';
 import { User } from './User';
-import { Course } from './Course';
+import { CourseDetail } from './CourseDetail';
 import { Notfound } from './NotFound';
 
 export const admin = 'admin@muni.cz';
@@ -85,7 +85,7 @@ const App: React.FC = () => {
                     },
                     {
                       to: '/course/',
-                      label: 'Course'
+                      label: 'Course Detail'
                     }
                   ].map(button => (
                     <Button
@@ -131,7 +131,7 @@ const App: React.FC = () => {
           />
           <Route path='/about/' component={About} />
           <Route path='/user/' component={User} />
-          <Route path='/course/' component={Course} />
+          <Route path='/course/' component={CourseDetail} />
           <Route component={Notfound} />
         </Switch>
       </Router>

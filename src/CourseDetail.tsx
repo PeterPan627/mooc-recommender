@@ -18,8 +18,9 @@ const useStyles = makeStyles({
   },
 });
 
-export function Course() {
+export function CourseDetail() {
   const classes = useStyles();
+  
   const [courseId, setCourseId] = useState('1styearteachingms-hs-936');
   const [name, setName] = useState();
   const [overview, setOverview] = useState();
