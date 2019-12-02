@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 const App: React.FC = () => {
   const classes = useStyles;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const authorizeUser = (username: string, password: string) => {
     const isAuthorized = username === admin && password === adminPassword;
@@ -116,7 +116,6 @@ const App: React.FC = () => {
         </AppBar>
 
         <Redirect to={isLoggedIn ? '/' : '/login/'} />
-        {/* <Redirect to={false ? "/" : "/login/"} /> */}
 
         <Switch>
           {/** 
