@@ -6,6 +6,9 @@ import { PersonaAlice } from './personas/PersonaAlice';
 import { PersonaBob } from './personas/PersonaBob';
 import { PersonaCharlie } from './personas/PersonaCharlie';
 import { PersonaDavid } from './personas/PersonaDavid';
+import { red, grey } from '@material-ui/core/colors';
+import { palette } from '@material-ui/system';
+import { ListItemSecondaryAction } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -13,13 +16,14 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         padding: theme.spacing(2),
+        margin: 20,
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
 }));
 
 export function Home() {
-    const classes = useStyles();
+    const classes = useStyles;
 
     return (
         <div>
@@ -27,20 +31,20 @@ export function Home() {
             <Grid
                 container
                 direction="column"
-                justify="flex-start"
-                alignItems="flex-start"
+                justify="space-between"
+                alignItems="stretch"
             >
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}><PersonaAlice/></Paper>
+                <Grid>
+                    <PersonaAlice />
                 </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}><PersonaBob/></Paper>
+                <Grid>
+                    <PersonaBob />
                 </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}><PersonaCharlie/></Paper>
+                <Grid>
+                    <PersonaCharlie />
                 </Grid>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}><PersonaDavid/></Paper>
+                <Grid>
+                    <PersonaDavid />
                 </Grid>
             </Grid>
         </div>

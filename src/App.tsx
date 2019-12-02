@@ -33,7 +33,8 @@ const ourTheme = createMuiTheme({
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: '#E8E8E8'
   },
   menuButton: {
     marginRight: theme.spacing(2)

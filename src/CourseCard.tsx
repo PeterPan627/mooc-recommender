@@ -23,7 +23,13 @@ const useStyles = makeStyles({
     },
 });
 
-export function CourseCard(title: string, syllabus: string, courseId: string) {
+type CardProps = {
+    title: string,
+    syllabus: string,
+    courseId: string,
+}
+
+export const CourseCard = ({ title, syllabus, courseId }: CardProps) => {
     const classes = useStyles();
 
     return (
