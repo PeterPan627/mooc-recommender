@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { getSubjectCategories, Subject } from './apiService';
+import { getSubjectCategories, Subject } from './services/apiService';
 import { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
     category: {
         fontSize: '1.1em',
@@ -24,7 +25,9 @@ function SubjectList() {
             <Grid container justify="center">
                 {subjects.map(sub => (
                     <Grid item xs={3} className={classes.subject}>
-                        <h3>{sub['_id']}</h3>
+                        <Link to={`/subject/${sub['_id']}/0`}>
+                            <h3>{sub['_id']}</h3>
+                        </Link>
                         <Grid container>
                             {sub['unique_categories'].map(cat => (
                                 <Grid item className={classes.category}>

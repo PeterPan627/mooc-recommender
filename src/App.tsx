@@ -11,6 +11,7 @@ import { CourseDetail } from './CourseDetail';
 import { Notfound } from './NotFound';
 import Nav from './Nav';
 import SubjectList from './SubjectList';
+import SubjectPage from './SubjectPage';
 
 export const admin = 'admin@muni.cz';
 export const adminPassword = '123';
@@ -87,6 +88,7 @@ const App: React.FC = () => {
                     <Route exact path="/about/" component={About} />
                     <Route exact path="/user/" component={User} />
                     <Route exact path="/course/:courseId" component={CourseDetail} />
+                    <Route exact path="/subject/:subjectId/:page" component={SubjectPage} />
                     <Route exact path="/subjects" component={SubjectList} />
                     <Route exact path="/" component={Home} />
                     <Route component={Notfound} />
