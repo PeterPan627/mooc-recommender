@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getCourseById } from './Api';
+import { getCourseById } from './apiService';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles({
     root: {
@@ -20,43 +21,43 @@ const useStyles = makeStyles({
 export function CourseDetail() {
     const classes = useStyles();
 
-    const courseId = '1styearteachingms-hs-936';
+    const { courseId }: { courseId?: string } = useParams();
     const [course, setCourse] = useState();
 
     useEffect(() => {
-        getCourseById(courseId).then(setCourse);
+        if (courseId) {
+            getCourseById(courseId).then(setCourse);
+        } else {
+            getCourseById('1styearteachingms-hs-936').then(setCourse);
+        }
     }, []);
 
-    function createRow(name: string, value: string) {
-        return { name, value };
-    }
-
-    const rows = course
-        ? [
-              createRow('id', courseId),
-              createRow('name', course.name),
-              createRow('overview', course.overview),
-              createRow('provider', course.provider),
-              createRow('interested count', course['interested_count']),
-              createRow('rating', course.rating),
-              createRow('subject', course.subject),
-              createRow('link', course.link),
-              createRow('syllabus', course.syllabus),
-              createRow('language', course.details.language),
-              createRow('certificate', course.details.certificate),
-          ]
-        : [];
+    const rows: Record<string, string> = course
+        ? {
+              id: course.id,
+              name: course.name,
+              overview: course.overview,
+              provider: course.provider,
+              'interested count': course['interested_count'],
+              rating: course.rating,
+              subject: course.subject,
+              link: course.link,
+              syllabus: course.syllabus,
+              ' language': course.details.language,
+              certificate: course.details.certificate,
+          }
+        : {};
 
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} aria-label="simple table">
                 <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.name}>
+                    {Object.keys(rows).map(key => (
+                        <TableRow key={key}>
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {key}
                             </TableCell>
-                            <TableCell>{row.value}</TableCell>
+                            <TableCell>{rows[key]}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

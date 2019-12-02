@@ -1,14 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { PersonaAlice } from './personas/PersonaAlice';
 import { PersonaBob } from './personas/PersonaBob';
 import { PersonaCharlie } from './personas/PersonaCharlie';
 import { PersonaDavid } from './personas/PersonaDavid';
-import { red, grey } from '@material-ui/core/colors';
-import { palette } from '@material-ui/system';
-import { ListItemSecondaryAction } from '@material-ui/core';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
