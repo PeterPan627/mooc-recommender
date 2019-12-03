@@ -25,13 +25,13 @@ function SubjectList() {
             <Grid container justify="center">
                 {subjects.map(sub => (
                     <Grid item xs={3} className={classes.subject}>
-                        <Link to={`/subject/${sub['_id']}/0`}>
-                            <h3>{sub['_id']}</h3>
+                        <Link to={`/subject/${sub['_id']}`}>
+                            <h2>{sub['_id']}</h2>
                         </Link>
                         <Grid container>
                             {sub['unique_categories'].map(cat => (
                                 <Grid item className={classes.category}>
-                                    {cat}
+                                    <Link to={`/subject/${sub['_id']}/${cat}/0`}>{cat}</Link>
                                 </Grid>
                             ))}
                         </Grid>

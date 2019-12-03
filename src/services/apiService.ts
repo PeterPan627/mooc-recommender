@@ -13,9 +13,33 @@ export async function getSubjectCategories(): Promise<Subject[]> {
     return await data.json();
 }
 
-export async function getSubjectCourses(subject: string, page: number = 0): Promise<Course[]> {
-    const data = await fetch(`${URL}/api/courses?subject=${subject}&page=${page}`);
-    return await data.json();
+export async function getCourses(
+    subject: string,
+    page: number = 0,
+    category?: string,
+): Promise<Course[]> {
+    const query = {
+        subject,
+        page: page.toString(),
+        category: category || undefined,
+    };
+    const url = buildQuery(`${URL}api/courses`, query);
+    const data = await fetch(url);
+    const res = await data.json();
+    return res || [];
+}
+
+function buildQuery(path: string, object: Record<string, string | undefined>): string {
+    return (
+        path +
+        '?' +
+        encodeURI(
+            Object.keys(object)
+                .filter(key => object[key])
+                .map(key => `${key}=${object[key]}`)
+                .join('&'),
+        )
+    );
 }
 
 export interface Course {

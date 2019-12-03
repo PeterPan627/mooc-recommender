@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, RefObject } from 'react';
-import CoursesList from './CoursesList';
+import React, { RefObject, useState, useRef, useEffect } from 'react';
+import { makeStyles, Button } from '@material-ui/core';
 import { useParams } from 'react-router';
-import { getCourses, Course } from './services/apiService';
-import { Button, makeStyles } from '@material-ui/core';
+import { Course, getCourses } from './services/apiService';
+import CoursesList from './CoursesList';
 import { Link } from 'react-router-dom';
+
 const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
     if (ref.current) {
         window.scrollTo(0, ref.current.offsetTop);
@@ -18,21 +19,22 @@ const useStyles = makeStyles({
         justifyContent: 'center',
     },
 });
-
-function SubjectPage() {
+function CategoryPage() {
     const classes = useStyles();
-    const { subjectId, page }: { subjectId?: string; page?: string } = useParams();
+    const { subjectId, page, categoryId }: Params = useParams();
+    // const categoryName = categoryId && categoryId.replace('-', ' ');
     const [pageNum, setPageNum] = useState(Number.parseInt(page || '0'));
     const [courses, setCourses] = useState<Course[]>([]);
     const myRef = useRef(null);
     useEffect(() => {
         if (subjectId) {
-            getCourses(subjectId, pageNum).then(setCourses);
+            getCourses(subjectId, pageNum, categoryId).then(setCourses);
         }
     }, [pageNum]);
     return (
         <div>
-            <h1 ref={myRef}>{subjectId}</h1>
+            <h1 ref={myRef}>{categoryId}</h1>
+            <h3>{subjectId}</h3>
             <p>some basic info about subject</p>
             <CoursesList courses={courses} />
             <div className={classes.buttons}>
@@ -43,7 +45,9 @@ function SubjectPage() {
                             scrollToRef(myRef);
                         }}
                     >
-                        <Link to={`/subject/${subjectId}/${pageNum - 1}`}>Previous Page</Link>
+                        <Link to={`/subject/${subjectId}/${categoryId}/${pageNum - 1}`}>
+                            Previous Page
+                        </Link>
                     </Button>
                 )}
                 <Button
@@ -52,11 +56,16 @@ function SubjectPage() {
                         scrollToRef(myRef);
                     }}
                 >
-                    <Link to={`/subject/${subjectId}/${pageNum + 1}`}>Next Page</Link>
+                    <Link to={`/subject/${subjectId}/${categoryId}/${pageNum + 1}`}>Next Page</Link>
                 </Button>
             </div>
         </div>
     );
 }
+interface Params {
+    subjectId?: string;
+    page?: string;
+    categoryId?: string;
+}
 
-export default SubjectPage;
+export default CategoryPage;
