@@ -13,6 +13,11 @@ import Nav from './Nav';
 import SubjectList from './SubjectList';
 import SubjectPage from './SubjectPage';
 import CategoryPage from './CategoryPage';
+import { CategoriesRec } from './recommendations/CategoriesRec';
+import { GeneralRec } from './recommendations/GeneralRec';
+import { OverfittingRec } from './recommendations/OverfittingRec';
+import { TaxonomyRec } from './recommendations/TaxonomyRec';
+
 
 export const admin = 'admin@muni.cz';
 export const adminPassword = '123';
@@ -44,14 +49,6 @@ const pages = [
     {
         to: '/',
         label: 'Home',
-    },
-    {
-        to: '/about/',
-        label: 'About',
-    },
-    {
-        to: '/user/',
-        label: 'User',
     },
     {
         to: '/course/',
@@ -89,6 +86,10 @@ const App: React.FC = () => {
                     <Route exact path="/about/" component={About} />
                     <Route exact path="/user/" component={User} />
                     <Route exact path="/course/:courseId" component={CourseDetail} />
+                    <Route exact path="/general/:personId" component={GeneralRec} />
+                    <Route exact path="/overfitting/:personId" component={OverfittingRec} />
+                    <Route exact path="/taxonomy/:personId" component={TaxonomyRec} />
+                    <Route exact path="/categories/:personId" component={CategoriesRec} />
                     <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
                     <Route
                         exact

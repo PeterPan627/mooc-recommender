@@ -13,6 +13,27 @@ export async function getSubjectCategories(): Promise<Subject[]> {
     return await data.json();
 }
 
+export async function getRecommendedByOverfitting(user_id: string): Promise<OverfittingRecommendation[]> {
+    const query = {
+        user_id
+    };
+    const url = buildQuery(`${URL}api/overfitting`, query);
+    const data = await fetch(url);
+    return await data.json();
+}
+export async function getRecommendedByCategories(): Promise<Subject[]> {
+    const data = await fetch(`${URL}/api/categories`);
+    return await data.json();
+}
+export async function getRecommendedByTaxonomy(): Promise<Subject[]> {
+    const data = await fetch(`${URL}/api/taxonomy`);
+    return await data.json();
+}
+export async function getRecommendedByGeneral(): Promise<Subject[]> {
+    const data = await fetch(`${URL}/api/general`);
+    return await data.json();
+}
+
 export async function getCourses(
     subject: string,
     page: number = 0,
@@ -68,4 +89,19 @@ export interface Details {
 export interface Subject {
     _id: string;
     unique_categories: string[];
+}
+
+export interface Cause {
+    CourseID: string;
+    Similarity: number;
+}
+export interface Recommendation {
+    course: Course;
+    recommendedBecause: Cause[];
+}
+
+export interface OverfittingRecommendation {
+    courseID: string;
+    recommended: Recommendation;
+    overallSimilarity: number;
 }

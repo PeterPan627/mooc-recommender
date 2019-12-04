@@ -27,8 +27,8 @@ export function CourseDetail() {
     useEffect(() => {
         if (courseId) {
             getCourseById(courseId).then(setCourse);
-        } else {
-            getCourseById('1styearteachingms-hs-936').then(setCourse);
+        } else {            
+            getCourseById('ancientgreeks-502').then(setCourse);
         }
     }, []);
 
@@ -43,7 +43,7 @@ export function CourseDetail() {
               subject: course.subject,
               link: course.link,
               syllabus: course.syllabus,
-              ' language': course.details.language,
+              'language': course.details.language,
               certificate: course.details.certificate,
           }
         : {};

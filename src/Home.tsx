@@ -24,7 +24,7 @@ export function Home() {
 
     return (
         <div>
-            <h2>Example Personas</h2>
+            <h2>Examples</h2>
             <Grid
                 container
                 direction="column"

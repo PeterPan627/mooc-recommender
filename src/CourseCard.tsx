@@ -25,11 +25,11 @@ const useStyles = makeStyles({
 
 type CardProps = {
     title: string,
-    syllabus: string,
+    description: string,
     courseId: string,
 }
 
-export const CourseCard = ({ title, syllabus, courseId }: CardProps) => {
+export const CourseCard = ({ title, description, courseId }: CardProps) => {
     const classes = useStyles();
 
     return (
@@ -42,11 +42,11 @@ export const CourseCard = ({ title, syllabus, courseId }: CardProps) => {
                     {title}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    {syllabus}
+                    {description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" href={courseId}>Learn More</Button>
+                <Button size="small" href={`/course/`+courseId}>Learn More</Button>
             </CardActions>
         </Card>
     );
