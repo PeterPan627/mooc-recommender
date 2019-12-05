@@ -40,7 +40,17 @@ export function CategoriesRec() {
 
     return (
         <>
-            <h2>Categories</h2>;
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
+                <Grid item>
+                    <h2>Categories</h2>;
+                </Grid>
+            </Grid>
+
             <Grid container
                 spacing={3}
                 justify="space-evenly"

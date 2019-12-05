@@ -38,7 +38,16 @@ export function TaxonomyRec() {
 
     return (
         <>
-            <h2>Taxonomy</h2>;
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
+                <Grid item>
+                    <h2>Taxonomy</h2>;
+                </Grid>
+            </Grid>
             <Grid container
                 spacing={3}
                 justify="space-evenly"

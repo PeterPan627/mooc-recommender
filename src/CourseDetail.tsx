@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { getCourseById } from './services/apiService';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import Grid from '@material-ui/core/Grid';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
@@ -27,29 +28,39 @@ export function CourseDetail() {
     useEffect(() => {
         if (courseId) {
             getCourseById(courseId).then(setCourse);
-        } else {            
+        } else {
             getCourseById('ancientgreeks-502').then(setCourse);
         }
     }, []);
 
     const rows: Record<string, string> = course
         ? {
-              id: course.id,
-              name: course.name,
-              overview: course.overview,
-              provider: course.provider,
-              'interested count': course['interested_count'],
-              rating: course.rating,
-              subject: course.subject,
-              link: course.link,
-              syllabus: course.syllabus,
-              'language': course.details.language,
-              certificate: course.details.certificate,
-          }
+            id: course.id,
+            name: course.name,
+            overview: course.overview,
+            provider: course.provider,
+            'interested count': course['interested_count'],
+            rating: course.rating,
+            subject: course.subject,
+            link: course.link,
+            syllabus: course.syllabus,
+            'language': course.details.language,
+            certificate: course.details.certificate,
+        }
         : {};
 
     return (
         <Paper className={classes.root}>
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
+                <Grid item>
+                    <h2>{rows['name']}</h2>
+                </Grid>
+            </Grid>
             <Table className={classes.table} aria-label="simple table">
                 <TableBody>
                     {Object.keys(rows).map(key => (
