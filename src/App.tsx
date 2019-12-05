@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         backgroundColor: '#E8E8E8',
         height: '100%',
-        position: 'absolute',
+        // position: 'absolute',
         left: 0,
         width: '100%',
         overflow: 'hidden',
