@@ -44,7 +44,7 @@ export function GeneralRec() {
             >
                 {(recommendations != null) &&
                     (recommendations.map(recs => (
-                        <Grid item xs={12} sm={6} >
+                        <Grid item xs={12} sm={5} >
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h6">

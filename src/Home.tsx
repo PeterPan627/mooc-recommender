@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import { PersonaAlice } from './personas/PersonaAlice';
 import { PersonaBob } from './personas/PersonaBob';
 import { PersonaCharlie } from './personas/PersonaCharlie';
@@ -33,7 +32,6 @@ export function Home() {
     return (
         <MuiThemeProvider theme={theme}>
             <div className={classes.root}>
-                <h2>Examples</h2>
                 <Grid
                     container
                     direction="column"
