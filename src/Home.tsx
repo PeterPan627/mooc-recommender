@@ -1,49 +1,59 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import { PersonaAlice } from './personas/PersonaAlice';
 import { PersonaBob } from './personas/PersonaBob';
 import { PersonaCharlie } from './personas/PersonaCharlie';
 import { PersonaDavid } from './personas/PersonaDavid';
 
+const theme = createMuiTheme({
+    palette: {
+        type: 'light',
+    },
+});
 
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+        backgroundColor: '#E8E8E8',
     },
-    paper: {
-        padding: theme.spacing(2),
-        margin: 20,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    link: {
+        textDecoration: 'none',
     },
 }));
 
 export function Home() {
-    const classes = useStyles;
+    const classes = useStyles();
 
     return (
-        <div>
-            <h2>Examples</h2>
-            <Grid
-                container
-                direction="column"
-                justify="space-between"
-                alignItems="stretch"
-            >
-                <Grid>
-                    <PersonaAlice />
+        <MuiThemeProvider theme={theme}>
+            <div className={classes.root}>
+                <h2>Examples</h2>
+                <Grid
+                    container
+                    direction="column"
+                    justify="space-between"
+                    alignItems="stretch"
+                >
+                    <Grid>
+                        <PersonaAlice />
+                    </Grid>
+                    <Grid>
+                        <PersonaBob />
+                    </Grid>
+                    <Grid>
+                        <PersonaCharlie />
+                    </Grid>
+                    <Grid>
+                        <PersonaDavid />
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <PersonaBob />
-                </Grid>
-                <Grid>
-                    <PersonaCharlie />
-                </Grid>
-                <Grid>
-                    <PersonaDavid />
-                </Grid>
-            </Grid>
-        </div>
+            </div>
+        </MuiThemeProvider>
     );
 }

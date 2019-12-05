@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         overflowX: 'auto',
+        backgroundColor: '#E8E8E8',
     },
     table: {
         minWidth: 650,
@@ -23,6 +24,7 @@ const useStyles = makeStyles(theme => ({
         minWidth: 275,
     },
 }));
+
 // imagine about page
 export function CategoriesRec() {
     const classes = useStyles();

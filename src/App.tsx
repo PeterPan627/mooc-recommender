@@ -25,10 +25,16 @@ export const adminPassword = '123';
 const ourTheme = createMuiTheme({
     palette: {
         primary: {
-            main: '#829298',
+            light: '#757ce8',
+            main: '#3f50b5',
+            dark: '#002884',
+            contrastText: '#fff',
         },
         secondary: {
-            main: '#82d4bb',
+            light: '#fffff7',
+            main: '#fff9c4',
+            dark: '#cbc693',
+            contrastText: '#000',
         },
     },
 });
@@ -45,15 +51,16 @@ const useStyles = makeStyles(theme => ({
         textDecoration: 'none',
     },
 }));
+
 const pages = [
     {
         to: '/',
         label: 'Home',
     },
-    {
-        to: '/course/',
-        label: 'Course Detail',
-    },
+    // {
+    //     to: '/course/',
+    //     label: 'Course Detail',
+    // },
     {
         to: '/subjects/',
         label: 'Subjects',
@@ -61,7 +68,7 @@ const pages = [
 ];
 
 const App: React.FC = () => {
-    const classes = useStyles;
+    const classes = useStyles();
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const authorizeUser = (username: string, password: string) => {
@@ -74,33 +81,35 @@ const App: React.FC = () => {
 
     return (
         <MuiThemeProvider theme={ourTheme}>
-            <Router>
-                {!isLoggedIn && <Redirect to={'/login/'} />}
-                <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} pages={pages} />
-                <Switch>
-                    <Route
-                        exact
-                        path="/login/"
-                        render={() => <Login authorizeUser={authorizeUser} />}
-                    />
-                    <Route exact path="/about/" component={About} />
-                    <Route exact path="/user/" component={User} />
-                    <Route exact path="/course/:courseId" component={CourseDetail} />
-                    <Route exact path="/generalRecommending/:personId" component={GeneralRec} />
-                    <Route exact path="/overfittingRecommending/:personId" component={OverfittingRec} />
-                    <Route exact path="/taxonomyRecommending/:personId" component={TaxonomyRec} />
-                    <Route exact path="/categoryRecommending/:personId" component={CategoriesRec} />
-                    <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
-                    <Route
-                        exact
-                        path="/subject/:subjectId/:categoryId/:page?"
-                        component={CategoryPage}
-                    />
-                    <Route exact path="/subjects" component={SubjectList} />
-                    <Route exact path="/" component={Home} />
-                    <Route component={Notfound} />
-                </Switch>
-            </Router>
+            <div className={classes.root}>
+                <Router>
+                    {!isLoggedIn && <Redirect to={'/login/'} />}
+                    <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} pages={pages} />
+                    <Switch>
+                        <Route
+                            exact
+                            path="/login/"
+                            render={() => <Login authorizeUser={authorizeUser} />}
+                        />
+                        <Route exact path="/about/" component={About} />
+                        <Route exact path="/user/" component={User} />
+                        <Route exact path="/course/:courseId" component={CourseDetail} />
+                        <Route exact path="/generalRecommending/:personId" component={GeneralRec} />
+                        <Route exact path="/overfittingRecommending/:personId" component={OverfittingRec} />
+                        <Route exact path="/taxonomyRecommending/:personId" component={TaxonomyRec} />
+                        <Route exact path="/categoryRecommending/:personId" component={CategoriesRec} />
+                        <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
+                        <Route
+                            exact
+                            path="/subject/:subjectId/:categoryId/:page?"
+                            component={CategoryPage}
+                        />
+                        <Route exact path="/subjects" component={SubjectList} />
+                        <Route exact path="/" component={Home} />
+                        <Route component={Notfound} />
+                    </Switch>
+                </Router>
+            </div>
         </MuiThemeProvider>
     );
 };
