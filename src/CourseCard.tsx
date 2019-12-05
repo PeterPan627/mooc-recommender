@@ -27,16 +27,17 @@ type CardProps = {
     title: string,
     description: string,
     courseId: string,
+    provider: string,
 }
 
-export const CourseCard = ({ title, description, courseId }: CardProps) => {
+export const CourseCard = ({ title, description, courseId, provider }: CardProps) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Course
+                    {provider}
                 </Typography>
                 <Typography variant="h5" component="h2">
                     {title}

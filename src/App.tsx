@@ -86,10 +86,10 @@ const App: React.FC = () => {
                     <Route exact path="/about/" component={About} />
                     <Route exact path="/user/" component={User} />
                     <Route exact path="/course/:courseId" component={CourseDetail} />
-                    <Route exact path="/general/:personId" component={GeneralRec} />
-                    <Route exact path="/overfitting/:personId" component={OverfittingRec} />
-                    <Route exact path="/taxonomy/:personId" component={TaxonomyRec} />
-                    <Route exact path="/categories/:personId" component={CategoriesRec} />
+                    <Route exact path="/generalRecommending/:personId" component={GeneralRec} />
+                    <Route exact path="/overfittingRecommending/:personId" component={OverfittingRec} />
+                    <Route exact path="/taxonomyRecommending/:personId" component={TaxonomyRec} />
+                    <Route exact path="/categoryRecommending/:personId" component={CategoriesRec} />
                     <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
                     <Route
                         exact

@@ -13,24 +13,36 @@ export async function getSubjectCategories(): Promise<Subject[]> {
     return await data.json();
 }
 
-export async function getRecommendedByOverfitting(user_id: string): Promise<OverfittingRecommendation[]> {
+export async function getRecommendedByOverfitting(user_id: string): Promise<WholeRecommendation[]> {
     const query = {
         user_id
     };
-    const url = buildQuery(`${URL}api/overfitting`, query);
+    const url = buildQuery(`${URL}api/overfittingRecommending`, query);
     const data = await fetch(url);
     return await data.json();
 }
-export async function getRecommendedByCategories(): Promise<Subject[]> {
-    const data = await fetch(`${URL}/api/categories`);
+export async function getRecommendedByCategories(user_id: string): Promise<WholeRecommendation[]> {
+    const query = {
+        user_id
+    };
+    const url = buildQuery(`${URL}api/categoryRecommending`, query);
+    const data = await fetch(url);
     return await data.json();
 }
-export async function getRecommendedByTaxonomy(): Promise<Subject[]> {
-    const data = await fetch(`${URL}/api/taxonomy`);
+export async function getRecommendedByTaxonomy(user_id: string): Promise<WholeRecommendation[]> {
+    const query = {
+        user_id
+    };
+    const url = buildQuery(`${URL}api/taxonomyRecommending`, query);
+    const data = await fetch(url);
     return await data.json();
 }
-export async function getRecommendedByGeneral(): Promise<Subject[]> {
-    const data = await fetch(`${URL}/api/general`);
+export async function getRecommendedByGeneral(user_id: string): Promise<WholeRecommendation[]> {
+    const query = {
+        user_id
+    };
+    const url = buildQuery(`${URL}api/generalRecommending`, query);
+    const data = await fetch(url);
     return await data.json();
 }
 
@@ -93,6 +105,7 @@ export interface Subject {
 
 export interface Cause {
     CourseID: string;
+    Popularity: number;
     Similarity: number;
 }
 export interface Recommendation {
@@ -100,7 +113,7 @@ export interface Recommendation {
     recommendedBecause: Cause[];
 }
 
-export interface OverfittingRecommendation {
+export interface WholeRecommendation {
     courseID: string;
     recommended: Recommendation;
     overallSimilarity: number;

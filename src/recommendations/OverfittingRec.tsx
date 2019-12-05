@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getRecommendedByOverfitting, OverfittingRecommendation, Recommendation, Cause } from '../services/apiService';
+import { getRecommendedByOverfitting, WholeRecommendation, Recommendation, Cause } from '../services/apiService';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -28,7 +28,7 @@ export function OverfittingRec() {
     const classes = useStyles();
 
     const { personId }: { personId?: string } = useParams();
-    const [recommendations, setRecommendations] = useState<Array<OverfittingRecommendation>>([]);
+    const [recommendations, setRecommendations] = useState<Array<WholeRecommendation>>([]);
 
     useEffect(() => {
         if (personId) {
