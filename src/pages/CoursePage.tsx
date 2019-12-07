@@ -31,7 +31,7 @@ export function CourseDetail() {
         } else {
             getCourseById('ancientgreeks-502').then(setCourse);
         }
-    }, []);
+    }, [courseId]);
 
     const rows: Record<string, string> = course
         ? {

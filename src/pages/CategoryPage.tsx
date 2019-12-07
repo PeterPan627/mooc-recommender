@@ -30,7 +30,7 @@ function CategoryPage() {
         if (subjectId) {
             getCourses(subjectId, pageNum, categoryId).then(setCourses);
         }
-    }, [pageNum]);
+    }, [pageNum, subjectId, categoryId]);
     return (
         <div>
             <h1 ref={myRef}>{categoryId}</h1>

@@ -9,7 +9,7 @@ import { User } from './pages/UserPage';
 import { CourseDetail } from './pages/CoursePage';
 import { Notfound } from './pages/NotFound';
 import Nav from './common/Nav';
-import SubjectList from './pages/SubjectListPage';
+import SubjectListPage from './pages/SubjectListPage';
 import SubjectPage from './pages/SubjectPage';
 import CategoryPage from './pages/CategoryPage';
 import { CategoriesRec } from './pages/recommendations/CategoriesRec';
@@ -39,12 +39,11 @@ const ourTheme = createMuiTheme({
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
         backgroundColor: '#E8E8E8',
         height: '100%',
+        minHeight: '100vh',
         left: 0,
         width: '100%',
-        overflow: 'hidden',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -114,7 +113,7 @@ const App: React.FC = () => {
                             path="/subject/:subjectId/:categoryId/:page?"
                             component={CategoryPage}
                         />
-                        <Route exact path="/subjects" component={SubjectList} />
+                        <Route exact path="/subjects" component={SubjectListPage} />
                         <Route exact path="/" component={Home} />
                         <Route component={Notfound} />
                     </Switch>

@@ -29,7 +29,7 @@ function SubjectPage() {
         if (subjectId) {
             getCourses(subjectId, pageNum).then(setCourses);
         }
-    }, [pageNum]);
+    }, [pageNum, subjectId]);
     return (
         <div>
             <h1 ref={myRef}>{subjectId}</h1>
