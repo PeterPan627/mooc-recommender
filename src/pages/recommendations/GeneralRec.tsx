@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getRecommendedByGeneral, WholeRecommendation, Recommendation, Cause } from '../../services/apiService';
+import { getRecommendedByGeneral, WholeRecommendation } from '../../services/apiService';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Grid, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
+import GridContainer from '../../common/GridContainer';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        overflowX: 'auto',
-    },
     table: {
         minWidth: 650,
     },
@@ -21,7 +18,6 @@ const useStyles = makeStyles(theme => ({
         minWidth: 275,
     },
 }));
-// imagine about page
 export function GeneralRec() {
     const classes = useStyles();
 
@@ -32,29 +28,20 @@ export function GeneralRec() {
         if (personId) {
             getRecommendedByGeneral(personId).then(setRecommendations);
         }
-    }, []);
+    }, [personId]);
 
     return (
         <>
-            <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-            >
+            <Grid container direction="column" justify="center" alignItems="center">
                 <Grid item>
                     <h2>General</h2>;
                 </Grid>
             </Grid>
 
-            <Grid container
-                spacing={3}
-                justify="space-evenly"
-                alignItems="stretch"
-            >
-                {(recommendations != null) &&
-                    (recommendations.map(recs => (
-                        <Grid item xs={12} sm={5} >
+            <GridContainer container spacing={3} justify="space-evenly" alignItems="stretch">
+                {recommendations != null &&
+                    recommendations.map(recs => (
+                        <Grid item xs={12} sm={5}>
                             <Card className={classes.card}>
                                 <CardContent>
                                     <Typography variant="h6">
@@ -62,14 +49,15 @@ export function GeneralRec() {
                                     </Typography>
                                     <Grid item>
                                         <Typography variant="body1" display="block" gutterBottom>
-                                            Overall similarity {(recs['overallSimilarity']).toFixed(1)}
+                                            Overall similarity{' '}
+                                            {recs['overallSimilarity'].toFixed(1)}
                                         </Typography>
                                     </Grid>
                                 </CardContent>
                             </Card>
                         </Grid>
-                    )))}
-            </Grid>
+                    ))}
+            </GridContainer>
         </>
     );
 }
