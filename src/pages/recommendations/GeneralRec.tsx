@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getRecommendedByGeneral, WholeRecommendation, Recommendation, Cause } from '../services/apiService';
+import { getRecommendedByGeneral, WholeRecommendation, Recommendation, Cause } from '../../services/apiService';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Grid, Typography } from '@material-ui/core';

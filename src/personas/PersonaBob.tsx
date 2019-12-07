@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { CourseCard } from '../CourseCard';
+import { CourseCard } from '../common/CourseCard';
 
 // imagine about page
 export const PersonaBob: React.FC = () => {

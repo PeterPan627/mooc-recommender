@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, RefObject } from 'react';
-import CoursesList from './CoursesList';
+import CoursesList from '../common/CoursesList';
 import { useParams } from 'react-router';
-import { getCourses, Course } from './services/apiService';
+import { getCourses, Course } from '../services/apiService';
 import { Button, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const scrollToRef = (ref: RefObject<HTMLDivElement>) => {

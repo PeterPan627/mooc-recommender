@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getSubjectCategories, Subject } from './services/apiService';
+import { getSubjectCategories, Subject } from '../services/apiService';
 import { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';

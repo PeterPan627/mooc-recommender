@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { createMuiTheme, makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import './App.css';
 
-import { Login } from './Login';
-import { About } from './About';
-import { Home } from './Home';
-import { User } from './User';
-import { CourseDetail } from './CourseDetail';
-import { Notfound } from './NotFound';
-import Nav from './Nav';
-import SubjectList from './SubjectList';
-import SubjectPage from './SubjectPage';
-import CategoryPage from './CategoryPage';
-import { CategoriesRec } from './recommendations/CategoriesRec';
-import { GeneralRec } from './recommendations/GeneralRec';
-import { OverfittingRec } from './recommendations/OverfittingRec';
-import { TaxonomyRec } from './recommendations/TaxonomyRec';
-
+import { Login } from './pages/Login';
+import { About } from './pages/About';
+import { Home } from './pages/Home';
+import { User } from './pages/UserPage';
+import { CourseDetail } from './pages/CoursePage';
+import { Notfound } from './pages/NotFound';
+import Nav from './common/Nav';
+import SubjectList from './pages/SubjectListPage';
+import SubjectPage from './pages/SubjectPage';
+import CategoryPage from './pages/CategoryPage';
+import { CategoriesRec } from './pages/recommendations/CategoriesRec';
+import { GeneralRec } from './pages/recommendations/GeneralRec';
+import { OverfittingRec } from './pages/recommendations/OverfittingRec';
+import { TaxonomyRec } from './pages/recommendations/TaxonomyRec';
 
 export const admin = 'admin@muni.cz';
 export const adminPassword = '123';
@@ -44,7 +42,6 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         backgroundColor: '#E8E8E8',
         height: '100%',
-        // position: 'absolute',
         left: 0,
         width: '100%',
         overflow: 'hidden',
@@ -62,10 +59,6 @@ const pages = [
         to: '/',
         label: 'Home',
     },
-    // {
-    //     to: '/course/',
-    //     label: 'Course Detail',
-    // },
     {
         to: '/subjects/',
         label: 'Subjects',
@@ -100,9 +93,21 @@ const App: React.FC = () => {
                         <Route exact path="/user/" component={User} />
                         <Route exact path="/course/:courseId" component={CourseDetail} />
                         <Route exact path="/generalRecommending/:personId" component={GeneralRec} />
-                        <Route exact path="/overfittingRecommending/:personId" component={OverfittingRec} />
-                        <Route exact path="/taxonomyRecommending/:personId" component={TaxonomyRec} />
-                        <Route exact path="/categoryRecommending/:personId" component={CategoriesRec} />
+                        <Route
+                            exact
+                            path="/overfittingRecommending/:personId"
+                            component={OverfittingRec}
+                        />
+                        <Route
+                            exact
+                            path="/taxonomyRecommending/:personId"
+                            component={TaxonomyRec}
+                        />
+                        <Route
+                            exact
+                            path="/categoryRecommending/:personId"
+                            component={CategoriesRec}
+                        />
                         <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
                         <Route
                             exact

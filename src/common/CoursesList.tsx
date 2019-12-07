@@ -1,5 +1,5 @@
 import React from 'react';
-import { Course } from './services/apiService';
+import { Course } from '../services/apiService';
 import { Grid, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 

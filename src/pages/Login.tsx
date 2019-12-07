@@ -9,8 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 
-//import logo from "./logo.svg";
-import "./App.css";
 
 export function Login(props: { authorizeUser: any; }) {
     const [email, setEmail] = useState("");

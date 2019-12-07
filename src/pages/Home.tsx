@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { PersonaAlice } from './personas/PersonaAlice';
-import { PersonaBob } from './personas/PersonaBob';
-import { PersonaCharlie } from './personas/PersonaCharlie';
-import { PersonaDavid } from './personas/PersonaDavid';
+import { PersonaAlice } from '../personas/PersonaAlice';
+import { PersonaBob } from '../personas/PersonaBob';
+import { PersonaCharlie } from '../personas/PersonaCharlie';
+import { PersonaDavid } from '../personas/PersonaDavid';
 
 const theme = createMuiTheme({
     palette: {
