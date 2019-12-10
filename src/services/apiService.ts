@@ -15,7 +15,7 @@ export async function getSubjectCategories(): Promise<Subject[]> {
 
 export async function getRecommendedByOverfitting(user_id: string): Promise<WholeRecommendation[]> {
     const query = {
-        user_id
+        user_id,
     };
     const url = buildQuery(`${URL}api/overfittingRecommending`, query);
     const data = await fetch(url);
@@ -23,7 +23,7 @@ export async function getRecommendedByOverfitting(user_id: string): Promise<Whol
 }
 export async function getRecommendedByCategories(user_id: string): Promise<WholeRecommendation[]> {
     const query = {
-        user_id
+        user_id,
     };
     const url = buildQuery(`${URL}api/categoryRecommending`, query);
     const data = await fetch(url);
@@ -31,7 +31,7 @@ export async function getRecommendedByCategories(user_id: string): Promise<Whole
 }
 export async function getRecommendedByTaxonomy(user_id: string): Promise<WholeRecommendation[]> {
     const query = {
-        user_id
+        user_id,
     };
     const url = buildQuery(`${URL}api/taxonomyRecommending`, query);
     const data = await fetch(url);
@@ -39,11 +39,23 @@ export async function getRecommendedByTaxonomy(user_id: string): Promise<WholeRe
 }
 export async function getRecommendedByGeneral(user_id: string): Promise<WholeRecommendation[]> {
     const query = {
-        user_id
+        user_id,
     };
     const url = buildQuery(`${URL}api/generalRecommending`, query);
     const data = await fetch(url);
     return await data.json();
+}
+
+export async function getUserById(userId: string) {
+    const res = await fetch(`${URL}/api/getUserById/${userId}`);
+    const user: User = await res.json();
+    return user;
+}
+
+export async function getPersonaCourse(userId: string): Promise<Record<string, Course[]>> {
+    const res = await fetch(`${URL}/api/getUserCourses/${userId}`);
+    const courses: Course[] = await res.json();
+    return { [userId]: courses };
 }
 
 export async function getCourses(
@@ -96,6 +108,14 @@ export interface Details {
     certificate: string;
     cost: number;
     language: string;
+}
+
+export interface User {
+    name: string;
+    enrolledIn: string[];
+    id: string;
+    authId: string;
+    rating: number[];
 }
 
 export interface Subject {

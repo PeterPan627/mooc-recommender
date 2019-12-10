@@ -39,7 +39,7 @@ const CourseCard = ({ title, description, courseId, provider }: CardProps) => {
                     {title}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    {description}
+                    {description.length > 100 ? description.substring(0, 100) + '...' : description}
                 </Typography>
             </CardContent>
             <CardActions>
