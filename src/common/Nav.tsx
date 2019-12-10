@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AppBar, Button, ButtonGroup, Toolbar, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import FirebaseContext from './../firebase/context';
 
-const nav = ({
-    isLoggedIn,
-    setIsLoggedIn,
-    pages,
-}: {
-    isLoggedIn: boolean;
-    setIsLoggedIn: Function;
+interface Props extends RouteComponentProps {
     pages: Array<{ label: string; to: string }>;
-}) => (
-    <AppBar color="primary" position="static">
-        <Toolbar>
-            {isLoggedIn && (
-                <>
+}
+
+const Nav = ({ pages, history }: Props) => {
+    const firebase = useContext(FirebaseContext);
+    const isLoggedIn = !!firebase && firebase.isLoggedIn();
+
+    return (
+        <AppBar color="primary" position="static">
+            <Toolbar>
+                {isLoggedIn ? (
                     <ButtonGroup
                         color="primary"
                         size="small"
@@ -32,16 +32,24 @@ const nav = ({
                                 </Typography>
                             </Button>
                         ))}
-                        <Button color="secondary" onClick={() => setIsLoggedIn(false)}>
+                        <Button color="secondary" onClick={() => firebase && firebase.logoutUser()}>
                             <Typography color="secondary" variant="button">
                                 Logout
                             </Typography>
                         </Button>
                     </ButtonGroup>
-                </>
-            )}
-        </Toolbar>
-    </AppBar>
-);
+                ) : (
+                    <ButtonGroup>
+                        <Button color="secondary" onClick={() => history.push('/login')}>
+                            <Typography color="secondary" variant="button">
+                                Login
+                            </Typography>
+                        </Button>
+                    </ButtonGroup>
+                )}
+            </Toolbar>
+        </AppBar>
+    );
+};
 
-export default nav;
+export default withRouter(Nav);

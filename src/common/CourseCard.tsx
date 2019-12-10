@@ -1,10 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
     card: {
@@ -24,13 +20,13 @@ const useStyles = makeStyles({
 });
 
 type CardProps = {
-    title: string,
-    description: string,
-    courseId: string,
-    provider: string,
-}
+    title: string;
+    description: string;
+    courseId: string;
+    provider: string;
+};
 
-export const CourseCard = ({ title, description, courseId, provider }: CardProps) => {
+const CourseCard = ({ title, description, courseId, provider }: CardProps) => {
     const classes = useStyles();
 
     return (
@@ -47,8 +43,11 @@ export const CourseCard = ({ title, description, courseId, provider }: CardProps
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" href={`/course/`+courseId}>Learn More</Button>
+                <Button size="small" href={`/course/` + courseId}>
+                    Learn More
+                </Button>
             </CardActions>
         </Card>
     );
-}
+};
+export default CourseCard;
