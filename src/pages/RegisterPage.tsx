@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import FirebaseContext from './../firebase/context';
 import { Redirect } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -17,20 +18,16 @@ function RegisterPage() {
     const [repass, setRepass] = useState('');
     const [error, setError] = useState({});
     const firebase = useContext(FirebaseContext);
-    const [isAuthorized, setIsAuthorized] = useState<boolean>(!!firebase && firebase.isLoggedIn());
+    const [user, loading, authErr] = useAuthState(firebase.auth);
 
+    const isAuthorized = !!user && !loading;
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (password !== repass) {
             setError({ msg: 'Retype password correctly' });
             return;
         }
-        if (firebase) {
-            firebase.registerUser(email, password).then(user => {
-                console.log(user);
-                setIsAuthorized(!!user);
-            });
-        }
+        firebase.registerUser(email, password);
     }
 
     return (

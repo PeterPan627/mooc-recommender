@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AppBar, Button, ButtonGroup, Toolbar, Typography } from '@material-ui/core';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import FirebaseContext from './../firebase/context';
 
 interface Props extends RouteComponentProps {
@@ -9,12 +10,19 @@ interface Props extends RouteComponentProps {
 
 const Nav = ({ pages, history }: Props) => {
     const firebase = useContext(FirebaseContext);
-    const isLoggedIn = !!firebase && firebase.isLoggedIn();
+    const [user, loading, error] = useAuthState(firebase.auth);
+    if (loading) {
+        return <div>loading</div>;
+    }
+
+    const logout = () => {
+        firebase.logoutUser();
+    };
 
     return (
         <AppBar color="primary" position="static">
             <Toolbar>
-                {isLoggedIn ? (
+                {!!user ? (
                     <ButtonGroup
                         color="primary"
                         size="small"
@@ -32,7 +40,7 @@ const Nav = ({ pages, history }: Props) => {
                                 </Typography>
                             </Button>
                         ))}
-                        <Button color="secondary" onClick={() => firebase && firebase.logoutUser()}>
+                        <Button color="secondary" onClick={() => logout()}>
                             <Typography color="secondary" variant="button">
                                 Logout
                             </Typography>

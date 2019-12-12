@@ -21,19 +21,38 @@ const devConfig = {
 const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 class Firebase {
     auth: app.auth.Auth;
+    authUser: app.User | null;
     constructor() {
-        app.initializeApp(config);
+        if (app.apps.length === 0) {
+            app.initializeApp(config);
+        }
         this.auth = app.auth();
+        this.authUser = JSON.parse(localStorage.getItem('authUser') || '{}');
+        this.auth.onAuthStateChanged(
+            authUser => {
+                localStorage.setItem('authUser', JSON.stringify(authUser));
+                this.authUser = authUser;
+            },
+            () => {
+                localStorage.removeItem('authUser');
+            },
+        );
     }
 
     registerUser = (email: string, password: string) =>
         this.auth.createUserWithEmailAndPassword(email, password);
 
     loginUser = (email: string, password: string) => {
-        this.auth.signInWithEmailAndPassword(email, password);
+        return this.auth.signInWithEmailAndPassword(email, password).then(user => {
+            this.authUser = user.user;
+            return !!user.user;
+        });
     };
 
-    logoutUser = () => this.auth.signOut();
+    logoutUser = () => {
+        localStorage.removeItem('authUser');
+        this.auth.signOut();
+    };
 
     passwordReset = (email: string) => this.auth.sendPasswordResetEmail(email);
     passwordUpdate = (password: string) => {
@@ -41,7 +60,6 @@ class Firebase {
             this.auth.currentUser.updatePassword(password);
         }
     };
-
-    isLoggedIn = (): boolean => !!this.auth.currentUser;
 }
+
 export default Firebase;

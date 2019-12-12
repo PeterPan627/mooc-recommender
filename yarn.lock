@@ -9029,6 +9029,11 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
+react-firebase-hooks@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-2.1.1.tgz#7180b86e4bd8e33699003a41e6d33f280a54319a"
+  integrity sha512-6ZvAUa5q1JJrTQxCEKCXrP6S/en3B65RAYRYHbbjUh9f1BgKPsxkdaGGBPhGKuVSLUrVqTm8PtpZ/LCtAFogKA==
+
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
@@ -9138,11 +9143,6 @@ react-transition-group@^4.3.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react-with-firebase-auth@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-with-firebase-auth/-/react-with-firebase-auth-1.2.0.tgz#a54e0eabaa6a5d839c7cd26b945337eabf82cfd7"
-  integrity sha512-wLJP7sM2WmUBvHcuP2EBgcNbSuPPZCkeAW9EQ/Q5DV6cmM2wqyEu92zKmWR9sBJ/Y64C+X0XThB8F4NBDLnHNg==
 
 react@^16.12.0:
   version "16.12.0"

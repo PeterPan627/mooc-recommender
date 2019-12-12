@@ -11,22 +11,25 @@ import {
 } from '@material-ui/core';
 import { Link as RrdLink, Redirect } from 'react-router-dom';
 import { FirebaseContext } from './../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const firebase = useContext(FirebaseContext);
-    const [isLoggedIn, setLoggedIn] = useState(!!firebase && firebase.isLoggedIn());
+    const [user, loading, authErr] = useAuthState(firebase.auth);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (firebase) {
             firebase.loginUser(email, password);
-            setLoggedIn(!!firebase.isLoggedIn());
         }
     }
-    if (isLoggedIn) {
+    if (loading){
+        return <div>loading</div>
+    }
+    if (!!user ) {
         return <Redirect to={'/'} />;
     }
 
