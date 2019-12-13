@@ -10,21 +10,19 @@ import {
     Typography,
 } from '@material-ui/core';
 import { Link as RrdLink, Redirect } from 'react-router-dom';
-import { FirebaseContext } from './../firebase';
+import { AuthContext } from '../auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
-    const { firebase } = useContext(FirebaseContext);
-    const [user, loading, authErr] = useAuthState(firebase.auth);
+    const { auth, loginUser } = useContext(AuthContext);
+    const [user, loading, authErr] = useAuthState(auth);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (firebase) {
-            firebase.loginUser(email, password);
-        }
+        loginUser(email, password);
     }
     if (loading) {
         return <div>loading</div>;

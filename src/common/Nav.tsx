@@ -2,22 +2,22 @@ import React, { useContext } from 'react';
 import { AppBar, Button, ButtonGroup, Toolbar, Typography } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import FirebaseContext from './../firebase/context';
+import { AuthContext } from '../auth';
 
 interface Props {
     pages: Array<{ label: string; to: string }>;
 }
 
 const Nav = ({ pages }: Props) => {
-    const { firebase } = useContext(FirebaseContext);
+    const { auth, logoutUser } = useContext(AuthContext);
     const history = useHistory();
-    const [user, loading, error] = useAuthState(firebase.auth);
+    const [user, loading, error] = useAuthState(auth);
     if (loading) {
         return <div>loading</div>;
     }
 
     const logout = () => {
-        firebase.logoutUser();
+        logoutUser();
     };
 
     return (

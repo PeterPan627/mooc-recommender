@@ -8,10 +8,11 @@ import {
     TextField,
     CardActions,
 } from '@material-ui/core';
-import FirebaseContext from './../firebase/context';
+import AuthContext from '../auth/authContext';
 import { Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { registerUser } from '../services/apiService';
+import { createUser } from './../services/apiService';
+import { auth } from 'firebase';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -19,8 +20,8 @@ function RegisterPage() {
     const [password, setPassword] = useState('');
     const [repass, setRepass] = useState('');
     const [error, setError] = useState({});
-    const {firebase} = useContext(FirebaseContext);
-    const [user, loading, authErr] = useAuthState(firebase.auth);
+    const { auth, registerUser } = useContext(AuthContext);
+    const [user, loading, authErr] = useAuthState(auth);
 
     const isAuthorized = !!user && !loading;
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -29,7 +30,11 @@ function RegisterPage() {
             setError({ msg: 'Retype password correctly' });
             return;
         }
-        registerUser({email,password,name})
+        registerUser(email, password).then((user: auth.UserCredential | null) => {
+            if (user) {
+                createUser({ name, user });
+            }
+        });
     }
 
     return (

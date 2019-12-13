@@ -1,4 +1,5 @@
-import Firebase from './../firebase';
+import { auth } from 'firebase';
+
 export var URL = 'http://localhost:8080/api';
 
 export async function getCourseById(courseId: string) {
@@ -91,18 +92,15 @@ export async function getCourses(
     return res || [];
 }
 
-export function registerUser({ email, name, password }: UserRegisterForm) {
-    const firebase = new Firebase();
-    firebase.registerUser(email, password).then(user => {
-        const u = user.user;
-        if (u) {
-            fetch(`${URL}/createUser/${name}/${u.uid}`, { method: 'POST' })
-                .then(res => res.json())
-                .then(u => {
-                    console.log(u);
-                });
-        }
-    });
+export function createUser({ name, user }: UserRegisterForm) {
+    const u = user.user;
+    if (u) {
+        fetch(`${URL}/createUser/${name}/${u.uid}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(u => {
+                console.log(u);
+            });
+    }
 }
 
 function buildQuery(path: string, object: Record<string, string | undefined>): string {
@@ -120,8 +118,7 @@ function buildQuery(path: string, object: Record<string, string | undefined>): s
 
 export interface UserRegisterForm {
     name: string;
-    email: string;
-    password: string;
+    user: auth.UserCredential;
 }
 export interface Course {
     id: string;

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { FirebaseContext } from './../firebase';
+import { AuthContext } from '../auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 }
 
 function AuthorizedRoute(props: Props) {
-    const {firebase} = useContext(FirebaseContext);
-    const [user, loading, error] = useAuthState(firebase.auth);
+    const { auth } = useContext(AuthContext);
+    const [user, loading, error] = useAuthState(auth);
 
     if (!!user && !loading) {
         return <Route {...props} />;

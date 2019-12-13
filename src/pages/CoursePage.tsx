@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useParams } from 'react-router';
 import { Button } from '@material-ui/core';
-import { FirebaseContext } from '../firebase';
+import { AuthContext } from '../auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const useStyles = makeStyles({
@@ -28,8 +28,8 @@ export function CourseDetail() {
     const { courseId }: { courseId?: string } = useParams();
     const [course, setCourse] = useState();
 
-    const { firebase } = useContext(FirebaseContext);
-    const [user, loading, authErr] = useAuthState(firebase.auth);
+    const { auth } = useContext(AuthContext);
+    const [user, loading, authErr] = useAuthState(auth);
 
     useEffect(() => {
         if (courseId) {
