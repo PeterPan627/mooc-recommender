@@ -11,21 +11,20 @@ import {
 } from '@material-ui/core';
 import { Link as RrdLink, Redirect } from 'react-router-dom';
 import { AuthContext } from '../auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { Loader } from '../common';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
-    const { auth, loginUser } = useContext(AuthContext);
-    const [user, loading, authErr] = useAuthState(auth);
+    const { user, loginUser, loading } = useContext(AuthContext);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         loginUser(email, password);
     }
     if (loading) {
-        return <div>loading</div>;
+        return <Loader />;
     }
     if (!!user) {
         return <Redirect to={'/'} />;

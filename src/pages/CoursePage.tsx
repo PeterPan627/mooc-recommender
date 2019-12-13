@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import { useParams } from 'react-router';
 import { Button } from '@material-ui/core';
 import { AuthContext } from '../auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 const useStyles = makeStyles({
     root: {
@@ -28,8 +27,7 @@ export function CourseDetail() {
     const { courseId }: { courseId?: string } = useParams();
     const [course, setCourse] = useState();
 
-    const { auth } = useContext(AuthContext);
-    const [user, loading, authErr] = useAuthState(auth);
+    const { loading, user } = useContext(AuthContext);
 
     useEffect(() => {
         if (courseId) {

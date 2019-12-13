@@ -16,5 +16,6 @@ const devConfig = {
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_ID,
 };
-export const  USER_DATA_LOCALSTORAGE_LOCATION = 'authUserData'
+export const  USER_LOCALSTORAGE_LOCATION = 'user'
+export const  USER_DATA_LOCALSTORAGE_LOCATION = 'userData'
 export default process.env.NODE_ENV === 'production' ? prodConfig : devConfig;

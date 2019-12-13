@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import AuthContext from '../auth/authContext';
 import { Redirect } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { createUser } from './../services/apiService';
 import { auth } from 'firebase';
 
@@ -20,8 +19,7 @@ function RegisterPage() {
     const [password, setPassword] = useState('');
     const [repass, setRepass] = useState('');
     const [error, setError] = useState({});
-    const { auth, registerUser } = useContext(AuthContext);
-    const [user, loading, authErr] = useAuthState(auth);
+    const { user, registerUser, loading } = useContext(AuthContext);
 
     const isAuthorized = !!user && !loading;
     function handleSubmit(e: FormEvent<HTMLFormElement>) {

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { AppBar, Button, ButtonGroup, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, ButtonGroup, Toolbar, Typography, Grid } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { AuthContext } from '../auth';
 
 interface Props {
@@ -9,11 +8,10 @@ interface Props {
 }
 
 const Nav = ({ pages }: Props) => {
-    const { auth, logoutUser } = useContext(AuthContext);
+    const { logoutUser, user, userData, loading } = useContext(AuthContext);
     const history = useHistory();
-    const [user, loading, error] = useAuthState(auth);
     if (loading) {
-        return <div>loading</div>;
+        return null;
     }
 
     const logout = () => {
@@ -24,29 +22,53 @@ const Nav = ({ pages }: Props) => {
         <AppBar color="primary" position="static">
             <Toolbar>
                 {!!user ? (
-                    <ButtonGroup
-                        color="primary"
-                        size="small"
-                        aria-label="small contained button group"
-                    >
-                        {pages.map(button => (
-                            <Button
-                                key={button.label}
-                                color="secondary"
-                                component={Link}
-                                to={button.to}
+                    <Grid container justify="space-between" style={{ margin: '0 10% 0 10%' }}>
+                        <Grid item>
+                            <ButtonGroup
+                                color="primary"
+                                size="small"
+                                aria-label="small contained button group"
                             >
-                                <Typography color="secondary" variant="button">
-                                    {button.label}
-                                </Typography>
-                            </Button>
-                        ))}
-                        <Button color="secondary" onClick={() => logout()}>
-                            <Typography color="secondary" variant="button">
-                                Logout
-                            </Typography>
-                        </Button>
-                    </ButtonGroup>
+                                {pages.map(button => (
+                                    <Button
+                                        key={button.label}
+                                        color="secondary"
+                                        component={Link}
+                                        to={button.to}
+                                    >
+                                        <Typography color="secondary" variant="button">
+                                            {button.label}
+                                        </Typography>
+                                    </Button>
+                                ))}
+                            </ButtonGroup>
+                        </Grid>
+                        <Grid item>
+                            <Grid container direction="row">
+                                <Grid
+                                    item
+                                    style={{
+                                        paddingRight: '20px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Typography color="secondary" variant="h5" noWrap>
+                                        {userData ? 'Hi ' + userData.name : 'hello stranger'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <ButtonGroup>
+                                        <Button color="secondary" onClick={() => logout()}>
+                                            <Typography color="secondary" variant="button">
+                                                Logout
+                                            </Typography>
+                                        </Button>
+                                    </ButtonGroup>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 ) : (
                     <ButtonGroup>
                         <Button color="secondary" onClick={() => history.push('/login')}>

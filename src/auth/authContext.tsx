@@ -3,10 +3,14 @@ import { User } from '../services/apiService';
 import app, { auth } from 'firebase/app';
 import 'firebase/auth';
 import { getUserByAuthId } from '../services/apiService';
-import config, { USER_DATA_LOCALSTORAGE_LOCATION } from './config';
+import config, { USER_LOCALSTORAGE_LOCATION, USER_DATA_LOCALSTORAGE_LOCATION } from './config';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export const defValue = {
+    userData: null,
     user: null,
+    loading: false,
+    error: undefined,
     auth: app.apps.length === 0 ? app.initializeApp(config).auth() : app.auth(),
     logoutUser: () => {},
     loginUser: () => Promise.resolve(false),
@@ -15,7 +19,10 @@ export const defValue = {
     passwordReset: () => {},
 };
 export const AuthContext = React.createContext<{
-    user: User | null;
+    userData: User | null;
+    user: app.User | null;
+    loading: boolean;
+    error: auth.Error | undefined;
     auth: auth.Auth;
     loginUser: (email: string, password: string) => Promise<boolean>;
     logoutUser: Function;
@@ -29,21 +36,33 @@ export const UserContextProvider: React.FunctionComponent = props => {
         app.initializeApp(config);
     }
     const auth = app.auth();
-    const [authUser, setAuthUser] = useState(
-        JSON.parse(localStorage.getItem(USER_DATA_LOCALSTORAGE_LOCATION) || '{}'),
+    const [user, setUser] = useState(
+        JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_LOCATION) || 'null'),
     );
+    const [userData, setUserData] = useState(
+        JSON.parse(localStorage.getItem(USER_DATA_LOCALSTORAGE_LOCATION) || 'null'),
+    );
+
+    const [_, loading, error] = useAuthState(auth);
 
     const registerUser = (email: string, password: string) =>
         auth.createUserWithEmailAndPassword(email, password);
 
     const loginUser = async (email: string, password: string) => {
         const user = await auth.signInWithEmailAndPassword(email, password);
-        setAuthUser({});
+        if (user.user) {
+            const userData = await getUserByAuthId(user.user.uid);
+            setUserData(userData);
+            setUser(user);
+        }
         return !!user.user;
     };
 
     const logoutUser = () => {
+        localStorage.removeItem(USER_LOCALSTORAGE_LOCATION);
         localStorage.removeItem(USER_DATA_LOCALSTORAGE_LOCATION);
+        setUser(null);
+        setUserData(null);
         auth.signOut();
     };
 
@@ -59,31 +78,33 @@ export const UserContextProvider: React.FunctionComponent = props => {
             newUser => {
                 if (newUser) {
                     getUserByAuthId(newUser.uid).then(user => {
-                        const userData = { auth: newUser, data: user };
-                        localStorage.setItem(
-                            USER_DATA_LOCALSTORAGE_LOCATION,
-                            JSON.stringify(userData),
-                        );
-                        setAuthUser(userData);
+                        setUserData(user);
+                        setUser(newUser);
+                        localStorage.setItem(USER_DATA_LOCALSTORAGE_LOCATION, JSON.stringify(user));
+                        localStorage.setItem(USER_LOCALSTORAGE_LOCATION, JSON.stringify(newUser));
                     });
                 }
             },
             () => {
+                localStorage.removeItem(USER_LOCALSTORAGE_LOCATION);
                 localStorage.removeItem(USER_DATA_LOCALSTORAGE_LOCATION);
             },
         );
         return unsub;
-    },[]);
+    }, []);
     return (
         <AuthContext.Provider
             value={{
                 auth,
-                user: authUser,
+                user,
+                userData,
                 loginUser,
                 logoutUser,
                 registerUser,
                 passwordReset,
                 passwordUpdate,
+                loading,
+                error,
             }}
         >
             {props.children}
