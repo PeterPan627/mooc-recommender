@@ -19,7 +19,7 @@ export function User() {
                 setCourses(res[user.uid]);
             });
         }
-    });
+    },[]);
 
     return (
         <div>
