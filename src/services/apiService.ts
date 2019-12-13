@@ -1,7 +1,19 @@
 import { auth } from 'firebase';
+import { toast } from 'react-toastify';
 
 export var URL = 'http://localhost:8080/api';
 
+function req(url: string, method = 'GET') {
+    return fetch(url, { method }).then(res => {
+        return res.json().then(data => {
+            if (res.ok) {
+                return data;
+            } else {
+                throw Error(data.error);
+            }
+        });
+    });
+}
 export async function getCourseById(courseId: string) {
     const data = await fetch(`${URL}/getbyid/${courseId}`);
     return await data.json();
@@ -59,21 +71,31 @@ export async function getUserByAuthId(authId: string) {
     return user;
 }
 
-export async function getPersonaCourse(userId: string): Promise<Record<string, Course[]>> {
+export async function getUserCourses(userId: string): Promise<Record<string, Course[]>> {
     const res = await fetch(`${URL}/getUserCourses/${userId}`);
     const courses: Course[] = await res.json();
     return { [userId]: courses };
 }
-export async function getUserCourses(userId: string): Promise<Record<string, Course[]>> {
+export async function getUserCoursesByAuth(userId: string): Promise<Record<string, Course[]>> {
     const res = await fetch(`${URL}/getUserCoursesByAuth/${userId}`);
     const courses: Course[] = await res.json();
     return { [userId]: courses };
 }
 
 export async function enrollUserToCourse(userId: string, courseId: string) {
-    const res = await fetch(`${URL}/enrollUser/${userId}/${courseId}`, { method: 'POST' });
-    const user = await res.json();
-    return user;
+    try {
+        return await req(`${URL}/enrollUser/${userId}/${courseId}`, 'POST');
+    } catch (e) {
+        toast.error(e.message);
+    }
+}
+
+export async function removeUserEnrollment(userId: string, courseId: string) {
+    try {
+        return await req(`${URL}/removeUserEnrollement/${userId}/${courseId}`, 'POST');
+    } catch (e) {
+        toast.error(e.message);
+    }
 }
 
 export async function getCourses(

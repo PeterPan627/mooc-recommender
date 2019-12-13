@@ -16,6 +16,8 @@ import { CategoriesRec } from './pages/recommendations/CategoriesRec';
 import { GeneralRec } from './pages/recommendations/GeneralRec';
 import { OverfittingRec } from './pages/recommendations/OverfittingRec';
 import { TaxonomyRec } from './pages/recommendations/TaxonomyRec';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import RegisterPage from './pages/RegisterPage';
 import AuthorizedRoute from './common/AuthorizedRoute';
 
@@ -50,6 +52,13 @@ const useStyles = makeStyles(theme => ({
     link: {
         textDecoration: 'none',
     },
+    toastContainer: {
+        position: 'fixed',
+        top: '10vh',
+        right: '5%',
+        color: 'black',
+        fontSize: '20px',
+    },
 }));
 
 const pages = [
@@ -58,8 +67,12 @@ const pages = [
         label: 'Home',
     },
     {
-        to: '/subjects/',
+        to: '/subjects',
         label: 'Subjects',
+    },
+    {
+        to: '/user/',
+        label: 'Profile',
     },
 ];
 
@@ -73,7 +86,7 @@ const App: React.FC = () => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={RegisterPage} />
                     <Route exact path="/about" component={About} />
-                    <AuthorizedRoute exact path="/user" component={User} />
+                    <AuthorizedRoute path="/user/:userId?" component={User} />
                     <Route exact path="/course/:courseId" component={CourseDetail} />
                     <AuthorizedRoute
                         exact
@@ -109,6 +122,7 @@ const App: React.FC = () => {
                     <AuthorizedRoute exact path="/" component={Home} />
                     <Route component={Notfound} />
                 </Switch>
+                <ToastContainer className={classes.toastContainer} />
             </div>
         </MuiThemeProvider>
     );

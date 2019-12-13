@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getCourseById, enrollUserToCourse } from '../services/apiService';
+import { getCourseById, removeUserEnrollment, enrollUserToCourse } from '../services/apiService';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Grid from '@material-ui/core/Grid';
@@ -27,7 +27,7 @@ export function CourseDetail() {
     const { courseId }: { courseId?: string } = useParams();
     const [course, setCourse] = useState();
 
-    const { loading, user } = useContext(AuthContext);
+    const { loading, user, userData, setUserData } = useContext(AuthContext);
 
     useEffect(() => {
         if (courseId) {
@@ -38,8 +38,32 @@ export function CourseDetail() {
     }, [courseId]);
     const enroll = () => {
         if (user && courseId) {
-            enrollUserToCourse(user.uid, courseId);
+            enrollUserToCourse(user.uid, courseId).then(user => {
+                if (user) {
+                    setUserData(user);
+                }
+            });
         }
+    };
+    const removeEnrollment = () => {
+        if (user && courseId) {
+            removeUserEnrollment(user.uid, courseId).then(user => {
+                if (user) {
+                    setUserData(user);
+                }
+            });
+        }
+    };
+
+    const renderEnrollBtn = () => {
+        if (user && courseId && userData) {
+            if (userData.enrolledIn.indexOf(courseId) > -1) {
+                return <Button onClick={removeEnrollment}>Leave Course</Button>;
+            } else {
+                return <Button onClick={enroll}>Enroll</Button>;
+            }
+        }
+        return null;
     };
 
     const rows: Record<string, string> = course
@@ -63,7 +87,7 @@ export function CourseDetail() {
             <Grid container direction="column" justify="center" alignItems="center">
                 <Grid item>
                     <h2>{rows['name']}</h2>
-                    <Button onClick={enroll}>Enroll</Button>
+                    {renderEnrollBtn()}
                 </Grid>
             </Grid>
             <Table className={classes.table} aria-label="simple table">

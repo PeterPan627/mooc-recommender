@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { User, getUserById, Course, getPersonaCourse } from '../services/apiService';
+import { User, getUserById, Course, getUserCourses } from '../services/apiService';
 import PersonalPage from '../common/PersonaRecommendation';
 
 const theme = createMuiTheme({
@@ -37,7 +37,7 @@ export function Home() {
 
     useEffect(() => {
         const personaList = defPersonas.map(id => getUserById(id));
-        const personaCourses = defPersonas.map(id => getPersonaCourse(id));
+        const personaCourses = defPersonas.map(id => getUserCourses(id));
         Promise.all([Promise.all(personaList), Promise.all(personaCourses)]).then(res => {
             const [personas, courses] = res;
             setPersonasData(personas);

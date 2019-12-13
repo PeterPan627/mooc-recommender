@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../auth';
 
 interface Props {
-    exact: boolean;
+    exact?: boolean;
     path: string;
     component: any;
 }

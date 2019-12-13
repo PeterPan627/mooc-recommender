@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { getUserByAuthId } from '../services/apiService';
 import config, { USER_LOCALSTORAGE_LOCATION, USER_DATA_LOCALSTORAGE_LOCATION } from './config';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 
 export const defValue = {
     userData: null,
@@ -12,6 +13,7 @@ export const defValue = {
     loading: false,
     error: undefined,
     auth: app.apps.length === 0 ? app.initializeApp(config).auth() : app.auth(),
+    setUserData: () => {},
     logoutUser: () => {},
     loginUser: () => Promise.resolve(false),
     registerUser: () => Promise.resolve(null),
@@ -29,6 +31,7 @@ export const AuthContext = React.createContext<{
     registerUser: (email: string, password: string) => Promise<auth.UserCredential | null>;
     passwordReset: Function;
     passwordUpdate: Function;
+    setUserData: (user: User) => void;
 }>(defValue);
 
 export const UserContextProvider: React.FunctionComponent = props => {
@@ -54,6 +57,7 @@ export const UserContextProvider: React.FunctionComponent = props => {
             const userData = await getUserByAuthId(user.user.uid);
             setUserData(userData);
             setUser(user);
+            toast.success('You have been successfully logged.');
         }
         return !!user.user;
     };
@@ -64,6 +68,7 @@ export const UserContextProvider: React.FunctionComponent = props => {
         setUser(null);
         setUserData(null);
         auth.signOut();
+        toast.info('You have been successfully logged out.');
     };
 
     const passwordReset = (email: string) => auth.sendPasswordResetEmail(email);
@@ -105,6 +110,7 @@ export const UserContextProvider: React.FunctionComponent = props => {
                 passwordUpdate,
                 loading,
                 error,
+                setUserData,
             }}
         >
             {props.children}

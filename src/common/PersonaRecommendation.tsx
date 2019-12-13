@@ -51,16 +51,20 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
                 </Grid>
             </Grid>
             <Grid container direction="row" justify="space-evenly" alignItems="stretch">
-                {courses.map(({ provider, name, description, id }) => (
-                    <Grid item xs={2} key={id}>
-                        <CourseCard
-                            provider={provider}
-                            title={name}
-                            courseId={id}
-                            description={description}
-                        />
-                    </Grid>
-                ))}
+                {courses && courses.length > 0 ? (
+                    courses.map(({ provider, name, description, id }) => (
+                        <Grid item xs={2} key={id}>
+                            <CourseCard
+                                provider={provider}
+                                title={name}
+                                courseId={id}
+                                description={description}
+                            />
+                        </Grid>
+                    ))
+                ) : (
+                    <div>You are not enrolled in any courses</div>
+                )}
             </Grid>
         </Grid>
     );

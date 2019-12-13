@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     card: {
@@ -43,8 +44,8 @@ const CourseCard = ({ title, description, courseId, provider }: CardProps) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" href={`/course/` + courseId}>
-                    Learn More
+                <Button size="small">
+                    <Link to={`/course/` + courseId}>Learn More</Link>
                 </Button>
             </CardActions>
         </Card>
