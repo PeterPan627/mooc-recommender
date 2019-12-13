@@ -10,7 +10,7 @@ interface Props {
 }
 
 function AuthorizedRoute(props: Props) {
-    const firebase = useContext(FirebaseContext);
+    const {firebase} = useContext(FirebaseContext);
     const [user, loading, error] = useAuthState(firebase.auth);
 
     if (!!user && !loading) {

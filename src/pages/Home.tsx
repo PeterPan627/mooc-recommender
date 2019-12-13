@@ -43,7 +43,7 @@ export function Home() {
             setPersonasData(personas);
             setPersonaCourses(courses.reduce((acc, curr) => ({ ...acc, ...curr }), {}));
         });
-    }, [defPersonas]);
+    }, []);
 
     return (
         <MuiThemeProvider theme={theme}>

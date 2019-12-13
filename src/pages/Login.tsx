@@ -17,7 +17,7 @@ export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
-    const firebase = useContext(FirebaseContext);
+    const { firebase } = useContext(FirebaseContext);
     const [user, loading, authErr] = useAuthState(firebase.auth);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -26,10 +26,10 @@ export function Login() {
             firebase.loginUser(email, password);
         }
     }
-    if (loading){
-        return <div>loading</div>
+    if (loading) {
+        return <div>loading</div>;
     }
-    if (!!user ) {
+    if (!!user) {
         return <Redirect to={'/'} />;
     }
 

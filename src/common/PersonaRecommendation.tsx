@@ -2,20 +2,19 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { CourseCard } from '.';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Course } from '../services/apiService';
-interface Props extends RouteComponentProps {
+interface Props {
     name: string;
     id: string;
     courses: Course[];
 }
-const PersonaRecommendation: React.FC<Props> = ({ name, id, history, courses }) => {
+const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
+    const history = useHistory();
     return (
         <Grid item>
             <Grid container direction="row" justify="center" alignItems="center">
-                <h2>
-                    {name} 
-                </h2>
+                <h2>{name}</h2>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item>
@@ -67,4 +66,4 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, history, courses }) 
     );
 };
 
-export default withRouter(PersonaRecommendation);
+export default PersonaRecommendation;

@@ -1,15 +1,16 @@
-export var URL = 'http://localhost:8080/';
+import Firebase from './../firebase';
+export var URL = 'http://localhost:8080/api';
 
 export async function getCourseById(courseId: string) {
-    const data = await fetch(`${URL}/api/getbyid/${courseId}`);
+    const data = await fetch(`${URL}/getbyid/${courseId}`);
     return await data.json();
 }
 export async function getSubjects() {
-    const data = await fetch(`${URL}/api/subjects`);
+    const data = await fetch(`${URL}/subjects`);
     return await data.json();
 }
 export async function getSubjectCategories(): Promise<Subject[]> {
-    const data = await fetch(`${URL}/api/categories`);
+    const data = await fetch(`${URL}/categories`);
     return await data.json();
 }
 
@@ -17,7 +18,7 @@ export async function getRecommendedByOverfitting(user_id: string): Promise<Whol
     const query = {
         user_id,
     };
-    const url = buildQuery(`${URL}api/overfittingRecommending`, query);
+    const url = buildQuery(`${URL}/overfittingRecommending`, query);
     const data = await fetch(url);
     return await data.json();
 }
@@ -25,7 +26,7 @@ export async function getRecommendedByCategories(user_id: string): Promise<Whole
     const query = {
         user_id,
     };
-    const url = buildQuery(`${URL}api/categoryRecommending`, query);
+    const url = buildQuery(`${URL}/categoryRecommending`, query);
     const data = await fetch(url);
     return await data.json();
 }
@@ -33,7 +34,7 @@ export async function getRecommendedByTaxonomy(user_id: string): Promise<WholeRe
     const query = {
         user_id,
     };
-    const url = buildQuery(`${URL}api/taxonomyRecommending`, query);
+    const url = buildQuery(`${URL}/taxonomyRecommending`, query);
     const data = await fetch(url);
     return await data.json();
 }
@@ -41,21 +42,37 @@ export async function getRecommendedByGeneral(user_id: string): Promise<WholeRec
     const query = {
         user_id,
     };
-    const url = buildQuery(`${URL}api/generalRecommending`, query);
+    const url = buildQuery(`${URL}/generalRecommending`, query);
     const data = await fetch(url);
     return await data.json();
 }
 
 export async function getUserById(userId: string) {
-    const res = await fetch(`${URL}/api/getUserById/${userId}`);
+    const res = await fetch(`${URL}/getUserById/${userId}`);
+    const user: User = await res.json();
+    return user;
+}
+export async function getUserByAuthId(authId: string) {
+    const res = await fetch(`${URL}/getUserByAuthId/${authId}`);
     const user: User = await res.json();
     return user;
 }
 
 export async function getPersonaCourse(userId: string): Promise<Record<string, Course[]>> {
-    const res = await fetch(`${URL}/api/getUserCourses/${userId}`);
+    const res = await fetch(`${URL}/getUserCourses/${userId}`);
     const courses: Course[] = await res.json();
     return { [userId]: courses };
+}
+export async function getUserCourses(userId: string): Promise<Record<string, Course[]>> {
+    const res = await fetch(`${URL}/getUserCoursesByAuth/${userId}`);
+    const courses: Course[] = await res.json();
+    return { [userId]: courses };
+}
+
+export async function enrollUserToCourse(userId: string, courseId: string) {
+    const res = await fetch(`${URL}/enrollUser/${userId}/${courseId}`, { method: 'POST' });
+    const user = await res.json();
+    return user;
 }
 
 export async function getCourses(
@@ -68,10 +85,24 @@ export async function getCourses(
         page: page.toString(),
         category: category || undefined,
     };
-    const url = buildQuery(`${URL}api/courses`, query);
+    const url = buildQuery(`${URL}/courses`, query);
     const data = await fetch(url);
     const res = await data.json();
     return res || [];
+}
+
+export function registerUser({ email, name, password }: UserRegisterForm) {
+    const firebase = new Firebase();
+    firebase.registerUser(email, password).then(user => {
+        const u = user.user;
+        if (u) {
+            fetch(`${URL}/createUser/${name}/${u.uid}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(u => {
+                    console.log(u);
+                });
+        }
+    });
 }
 
 function buildQuery(path: string, object: Record<string, string | undefined>): string {
@@ -87,6 +118,11 @@ function buildQuery(path: string, object: Record<string, string | undefined>): s
     );
 }
 
+export interface UserRegisterForm {
+    name: string;
+    email: string;
+    password: string;
+}
 export interface Course {
     id: string;
     categories: string[];

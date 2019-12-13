@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import { getUserByAuthId } from '../services/apiService';
 const prodConfig = {
     apiKey: process.env.REACT_PROD_APP_API_KEY,
     authDomain: process.env.REACT_PROD_APP_AUTH_DOMAIN,
@@ -30,7 +31,14 @@ class Firebase {
         this.authUser = JSON.parse(localStorage.getItem('authUser') || '{}');
         this.auth.onAuthStateChanged(
             authUser => {
-                localStorage.setItem('authUser', JSON.stringify(authUser));
+                if (authUser) {
+                    getUserByAuthId(authUser.uid).then(user => {
+                        localStorage.setItem(
+                            'authUser',
+                            JSON.stringify({ auth: authUser, data: user }),
+                        );
+                    });
+                }
                 this.authUser = authUser;
             },
             () => {

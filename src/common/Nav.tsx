@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { AppBar, Button, ButtonGroup, Toolbar, Typography } from '@material-ui/core';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import FirebaseContext from './../firebase/context';
 
-interface Props extends RouteComponentProps {
+interface Props {
     pages: Array<{ label: string; to: string }>;
 }
 
-const Nav = ({ pages, history }: Props) => {
-    const firebase = useContext(FirebaseContext);
+const Nav = ({ pages }: Props) => {
+    const { firebase } = useContext(FirebaseContext);
+    const history = useHistory();
     const [user, loading, error] = useAuthState(firebase.auth);
     if (loading) {
         return <div>loading</div>;
@@ -60,4 +61,4 @@ const Nav = ({ pages, history }: Props) => {
     );
 };
 
-export default withRouter(Nav);
+export default Nav;

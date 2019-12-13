@@ -11,13 +11,15 @@ import {
 import FirebaseContext from './../firebase/context';
 import { Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { registerUser } from '../services/apiService';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [repass, setRepass] = useState('');
     const [error, setError] = useState({});
-    const firebase = useContext(FirebaseContext);
+    const {firebase} = useContext(FirebaseContext);
     const [user, loading, authErr] = useAuthState(firebase.auth);
 
     const isAuthorized = !!user && !loading;
@@ -27,7 +29,7 @@ function RegisterPage() {
             setError({ msg: 'Retype password correctly' });
             return;
         }
-        firebase.registerUser(email, password);
+        registerUser({email,password,name})
     }
 
     return (
@@ -49,6 +51,17 @@ function RegisterPage() {
                                     variant="outlined"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
+                                />
+                                <TextField
+                                    label="Name"
+                                    type="text"
+                                    name="name"
+                                    fullWidth
+                                    autoComplete="name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
                                 />
                                 <TextField
                                     label="Password"
