@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { getCourseById, removeUserEnrollment, enrollUserToCourse } from '../services/apiService';
+import {
+    getCourseById,
+    removeUserEnrollment,
+    enrollUserToCourse,
+    deleteReview,
+    getCourseReviews,
+    Review,
+    postReview,
+} from '../services/apiService';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +18,8 @@ import Paper from '@material-ui/core/Paper';
 import { useParams } from 'react-router';
 import { Button } from '@material-ui/core';
 import { AuthContext } from '../auth';
+import ReviewForm from '../common/ReviewForm';
+import ReviewList from '../common/ReviewList';
 
 const useStyles = makeStyles({
     root: {
@@ -28,12 +38,14 @@ export function CourseDetail() {
     const [course, setCourse] = useState();
 
     const { loading, user, userData, setUserData } = useContext(AuthContext);
+    const [reviews, setReviews] = useState<Review[]>([]);
 
     useEffect(() => {
         if (courseId) {
             getCourseById(courseId).then(setCourse);
-        } else {
-            getCourseById('ancientgreeks-502').then(setCourse);
+            getCourseReviews(courseId).then(res => {
+                setReviews(res);
+            });
         }
     }, [courseId]);
     const enroll = () => {
@@ -42,6 +54,26 @@ export function CourseDetail() {
                 if (user) {
                     setUserData(user);
                 }
+            });
+        }
+    };
+    const submit = (text: string, rating: number) => {
+        if (user && courseId) {
+            return postReview({ courseId, text, rating, authId: user.uid }).then(suc => {
+                if (suc.ok) {
+                    getCourseReviews(courseId).then(res => {
+                        setReviews(res);
+                    });
+                    return !!suc;
+                }
+                return false;
+            });
+        }
+    };
+    const handleDelete = (revId: string) => {
+        if (user && courseId) {
+            deleteReview(user.uid, revId).then(res => {
+                getCourseReviews(courseId).then(setReviews);
             });
         }
     };
@@ -54,10 +86,16 @@ export function CourseDetail() {
             });
         }
     };
+    const isEnrolledInCourse = () => {
+        if (!(user && courseId && userData)) {
+            return false;
+        }
+        return userData.enrolledIn.indexOf(courseId) > -1;
+    };
 
     const renderEnrollBtn = () => {
         if (user && courseId && userData) {
-            if (userData.enrolledIn.indexOf(courseId) > -1) {
+            if (isEnrolledInCourse()) {
                 return <Button onClick={removeEnrollment}>Leave Course</Button>;
             } else {
                 return <Button onClick={enroll}>Enroll</Button>;
@@ -102,6 +140,8 @@ export function CourseDetail() {
                     ))}
                 </TableBody>
             </Table>
+            {courseId && isEnrolledInCourse() && <ReviewForm submit={submit} courseId={courseId} />}
+            {courseId && <ReviewList reviews={reviews} handleDelete={handleDelete} />}
         </Paper>
     );
 }

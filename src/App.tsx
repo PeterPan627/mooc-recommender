@@ -64,15 +64,15 @@ const useStyles = makeStyles(theme => ({
 const pages = [
     {
         to: '/',
-        label: 'Home',
-    },
-    {
-        to: '/subjects',
         label: 'Subjects',
     },
     {
         to: '/user/',
         label: 'Profile',
+    },
+    {
+        to: '/personas',
+        label: 'Personas',
     },
 ];
 
@@ -86,8 +86,14 @@ const App: React.FC = () => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={RegisterPage} />
                     <Route exact path="/about" component={About} />
-                    <AuthorizedRoute path="/user/:userId?" component={User} />
                     <Route exact path="/course/:courseId" component={CourseDetail} />
+                    <Route exact path="/" component={SubjectListPage} />
+                    <Route
+                        exact
+                        path="/subject/:subjectId/:categoryId/:page?"
+                        component={CategoryPage}
+                    />
+                    <AuthorizedRoute path="/user/:userId?" component={User} />
                     <AuthorizedRoute
                         exact
                         path="/generalRecommending/:personId"
@@ -113,13 +119,7 @@ const App: React.FC = () => {
                         path="/subject/:subjectId/:page?"
                         component={SubjectPage}
                     />
-                    <AuthorizedRoute
-                        exact
-                        path="/subject/:subjectId/:categoryId/:page?"
-                        component={CategoryPage}
-                    />
-                    <Route exact path="/subjects" component={SubjectListPage} />
-                    <AuthorizedRoute exact path="/" component={Home} />
+                    <AuthorizedRoute exact path="/personas" component={Home} />
                     <Route component={Notfound} />
                 </Switch>
                 <ToastContainer className={classes.toastContainer} />

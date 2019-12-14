@@ -125,6 +125,28 @@ export function createUser({ name, user }: UserRegisterForm) {
     }
 }
 
+export async function getCourseReviews(courseId: string): Promise<Review[]> {
+    return await req(`${URL}/getReviews/${courseId}`).then(val => (val ? val : []));
+}
+export async function deleteReview(authId: string, reviewId: string) {
+    return await req(`${URL}/deleteReview/${authId}/${reviewId}`, 'DELETE');
+}
+
+export async function postReview(review: {
+    authId: string;
+    courseId: string;
+    text: string;
+    rating: number;
+}) {
+    const res = await fetch(`${URL}/postReview/${review.authId}/${review.courseId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(review),
+    });
+
+    return res;
+}
+
 function buildQuery(path: string, object: Record<string, string | undefined>): string {
     return (
         path +
@@ -157,6 +179,14 @@ export interface Course {
     syllabus: string;
     teachers: string[];
     details: Details;
+}
+
+export interface Review {
+    id: string;
+    text: string;
+    rating: number;
+    courseId: string;
+    user: User;
 }
 
 export interface Details {
