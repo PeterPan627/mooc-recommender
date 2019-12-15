@@ -26,7 +26,7 @@ function CoursesList(props: Props) {
         <div className={props.className}>
             <Grid container direction={'column'}>
                 {props.courses.map(course => (
-                    <Grid item xs={12} className={classes.container}>
+                    <Grid key={course.id} item xs={12} className={classes.container}>
                         <div>
                             <Link to={`/course/${course.id}`}>
                                 <h3>{course.name}</h3>

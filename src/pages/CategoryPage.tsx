@@ -50,14 +50,18 @@ function CategoryPage() {
                         </Link>
                     </Button>
                 )}
-                <Button
-                    onClick={() => {
-                        setPageNum(pageNum + 1);
-                        scrollToRef(myRef);
-                    }}
-                >
-                    <Link to={`/subject/${subjectId}/${categoryId}/${pageNum + 1}`}>Next Page</Link>
-                </Button>
+                {courses.length === 20 && (
+                    <Button
+                        onClick={() => {
+                            setPageNum(pageNum + 1);
+                            scrollToRef(myRef);
+                        }}
+                    >
+                        <Link to={`/subject/${subjectId}/${categoryId}/${pageNum + 1}`}>
+                            Next Page
+                        </Link>
+                    </Button>
+                )}
             </div>
         </div>
     );

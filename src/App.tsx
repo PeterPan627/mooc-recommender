@@ -114,11 +114,7 @@ const App: React.FC = () => {
                         path="/categoryRecommending/:personId"
                         component={CategoriesRec}
                     />
-                    <AuthorizedRoute
-                        exact
-                        path="/subject/:subjectId/:page?"
-                        component={SubjectPage}
-                    />
+                    <Route exact path="/subject/:subjectId/:page?" component={SubjectPage} />
                     <AuthorizedRoute exact path="/personas" component={Home} />
                     <Route component={Notfound} />
                 </Switch>
