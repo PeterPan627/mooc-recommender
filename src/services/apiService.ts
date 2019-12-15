@@ -9,7 +9,8 @@ function req(url: string, method = 'GET') {
             if (res.ok) {
                 return data;
             } else {
-                throw Error(data.error);
+                console.error(data)
+                toast.error(data);
             }
         });
     });
