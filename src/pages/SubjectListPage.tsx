@@ -78,7 +78,13 @@ function SubjectListPage() {
                                 </Grid>
                             </CardContent>
                             <CardActions className={classes.actions}>
-                                <Button onClick={e => setOpenSubject(sub._id)}>Show more</Button>
+                                {sub._id === openSubject ? (
+                                    <Button onClick={e => setOpenSubject(null)}>Show less</Button>
+                                ) : (
+                                    <Button onClick={e => setOpenSubject(sub._id)}>
+                                        Show more
+                                    </Button>
+                                )}
                             </CardActions>
                         </Card>
                     </Grid>
