@@ -25,7 +25,9 @@ const useStyles = makeStyles({
 
 function SubjectListPage() {
     const [subjects, setSubjects] = useState<Array<Subject>>([]);
+    const [openSubject, setOpenSubject] = useState<string | null>(null);
     const classes = useStyles();
+
     useEffect(() => {
         getSubjectCategories()
             .then(res => res.sort((a, b) => a['_id'].localeCompare(b['_id'])))
@@ -60,7 +62,12 @@ function SubjectListPage() {
                                 <Grid container>
                                     {sub['unique_categories']
                                         .sort((a, b) => a.localeCompare(b))
-                                        .slice(0, 15)
+                                        .slice(
+                                            0,
+                                            sub._id === openSubject
+                                                ? sub['unique_categories'].length
+                                                : 15,
+                                        )
                                         .map(cat => (
                                             <Grid key={cat} item className={classes.category}>
                                                 <Link to={`/subject/${sub['_id']}/${cat}/0`}>
@@ -71,9 +78,7 @@ function SubjectListPage() {
                                 </Grid>
                             </CardContent>
                             <CardActions className={classes.actions}>
-                                <Link to={`/categories/${sub['_id']}`}>
-                                    <Button>Show more</Button>
-                                </Link>
+                                <Button onClick={e => setOpenSubject(sub._id)}>Show more</Button>
                             </CardActions>
                         </Card>
                     </Grid>
