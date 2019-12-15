@@ -140,7 +140,12 @@ export function CourseDetail() {
                     ))}
                 </TableBody>
             </Table>
-            {courseId && isEnrolledInCourse() && <ReviewForm submit={submit} courseId={courseId} />}
+            {courseId &&
+                user &&
+                isEnrolledInCourse() &&
+                reviews.every(rev => rev.user.authId !== user.uid) && (
+                    <ReviewForm submit={submit} courseId={courseId} />
+                )}
             {courseId && <ReviewList reviews={reviews} handleDelete={handleDelete} />}
         </Paper>
     );
