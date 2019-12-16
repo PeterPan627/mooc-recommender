@@ -67,7 +67,7 @@ export function TaxonomyRec() {
                                         size="small"
                                         href={`/course/` + cause.CourseID}
                                     >
-                                        {(cause.Similarity * 100).toPrecision(3)}% similar
+                                        {(cause.Similarity).toPrecision(3)} similar
                                     </Button>
                                 ))}
                             </CardActions>
