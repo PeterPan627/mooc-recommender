@@ -37,7 +37,7 @@ export function CourseDetail() {
     const { courseId }: { courseId?: string } = useParams();
     const [course, setCourse] = useState();
 
-    const { loading, user, userData, setUserData } = useContext(AuthContext);
+    const { user, userData, setUserData } = useContext(AuthContext);
     const [reviews, setReviews] = useState<Review[]>([]);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Card, CardActions, CardContent, Button, Typography, makeStyles } from '@material-ui/core';
-import { Review, getCourseReviews, deleteReview } from '../services/apiService';
+import { Review } from '../services/apiService';
 import { Rating } from '@material-ui/lab';
 import { AuthContext } from '../auth';
 const useStyles = makeStyles({
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     },
     listContainer: {
         display: 'flex',
-        justifyContent:'center',
+        justifyContent: 'center',
     },
 });
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 }
 function ReviewList(props: Props) {
     const classes = useStyles();
-    const { user, userData } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     return (
         <div className={classes.listContainer}>

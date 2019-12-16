@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AppBar, Button, ButtonGroup, Toolbar, Typography, Grid } from '@material-ui/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth';
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 
 const Nav = ({ pages }: Props) => {
     const { logoutUser, user, userData, loading } = useContext(AuthContext);
-    const history = useHistory();
     if (loading) {
         return null;
     }
