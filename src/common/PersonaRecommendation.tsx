@@ -54,7 +54,7 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
                     </Grid>
                 </Grid>
             )}
-            <Grid container direction="row" justify="space-evenly" alignItems="stretch">
+            <GridContainer container spacing={2} direction="row" justify="space-evenly" alignItems="stretch">
                 {courses && courses.length > 0 ? (
                     courses.map(({ provider, name, description, id }) => (
                         <Grid item

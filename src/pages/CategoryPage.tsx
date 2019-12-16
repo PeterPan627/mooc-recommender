@@ -1,5 +1,5 @@
 import React, { RefObject, useState, useRef, useEffect } from 'react';
-import { makeStyles, Button } from '@material-ui/core';
+import { makeStyles, Grid, Button } from '@material-ui/core';
 import { useParams } from 'react-router';
 import { Course, getCourses } from '../services/apiService';
 import CoursesList from '../common/CoursesList';
@@ -32,10 +32,12 @@ function CategoryPage() {
         }
     }, [pageNum, subjectId, categoryId]);
     return (
-        <div>
-            <h1 ref={myRef}>{categoryId}</h1>
-            <h3>{subjectId}</h3>
-            <p>some basic info about subject</p>
+        <Grid container>
+            <Grid container direction="column" justify="center" alignItems="center">
+                <h2 ref={myRef}>{subjectId}/{categoryId}</h2>
+                <p>some basic info about subject</p>
+            </Grid>
+            
             <CoursesList courses={courses} />
             <div className={classes.buttons}>
                 {pageNum > 0 && (
@@ -63,7 +65,7 @@ function CategoryPage() {
                     </Button>
                 )}
             </div>
-        </div>
+        </Grid>
     );
 }
 interface Params {
