@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     },
     listContainer: {
         display: 'flex',
+        justifyContent:'center',
     },
 });
 interface Props {

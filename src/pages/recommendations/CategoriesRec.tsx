@@ -37,7 +37,7 @@ export function CategoriesRec() {
         <>
             <Grid container direction="column" justify="center" alignItems="center">
                 <Grid item>
-                    <h2>Categories</h2>;
+                    <h2>Categories</h2>
                 </Grid>
             </Grid>
 
