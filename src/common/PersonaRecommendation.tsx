@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import { CourseCard } from '.';
 import { useHistory } from 'react-router-dom';
 import { Course } from '../services/apiService';
+import GridContainer from '../common/GridContainer';
+
 interface Props {
     name: string;
     id: string;
@@ -55,7 +57,12 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
             <Grid container direction="row" justify="space-evenly" alignItems="stretch">
                 {courses && courses.length > 0 ? (
                     courses.map(({ provider, name, description, id }) => (
-                        <Grid item xs={2} key={id}>
+                        <Grid item
+                            key={id}
+                            xs={12}
+                            sm={5}
+                            md={4}
+                            lg={3}>
                             <CourseCard
                                 provider={provider}
                                 title={name}
@@ -65,9 +72,9 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
                         </Grid>
                     ))
                 ) : (
-                    <div>You are not enrolled in any courses</div>
-                )}
-            </Grid>
+                        <div>You are not enrolled in any courses</div>
+                    )}
+            </GridContainer>
         </Grid>
     );
 };

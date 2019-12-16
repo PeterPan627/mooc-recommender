@@ -1,18 +1,22 @@
 import React from 'react';
 import { Course } from '../services/apiService';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography, makeStyles } from '@material-ui/core';
+import GridContainer from '../common/GridContainer';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
-    container: {
-        margin: '0 0 0 10%',
-        borderBottom: 'black solid 1px',
-        width: '66%',
-    },
+    container: {},
+    //     margin: '0 0 0 10%',
+    //     borderBottom: 'black solid 1px',
+    //     width: '66%',
+    // },
     info: {
         display: 'flex',
         justifyContent: 'space-between',
-        width: '30%',
+        width: '100%',
+    },
+    subject: {
+        // margin: '0px 15px 10px 15px',
     },
 });
 interface Props {
@@ -24,21 +28,35 @@ function CoursesList(props: Props) {
 
     return (
         <div className={props.className}>
-            <Grid container direction={'column'}>
+            <GridContainer container justify="center" spacing={2}>
                 {props.courses.map(course => (
-                    <Grid key={course.id} item xs={12} className={classes.container}>
-                        <div>
-                            <Link to={`/course/${course.id}`}>
-                                <h3>{course.name}</h3>
-                            </Link>
-                            <div className={classes.info}>
-                                <div>{Math.floor(course.rating * 100) / 100}</div>
-                                <div>{course.provider}</div>
-                            </div>
-                        </div>
+                    <Grid
+                        key={course['id']}
+                        item
+                        xs={12}
+                        sm={5}
+                        md={4}
+                        lg={3}
+                        className={classes.subject}
+                    >
+                        <Grid key={course.id} item xs={12} className={classes.container}>
+                            <Card>
+                                <CardContent>
+                                    <Link to={`/course/${course.id}`}>
+                                        <Typography variant="subtitle2" gutterBottom>
+                                            {course.name}
+                                        </Typography>
+                                    </Link>
+                                    <div className={classes.info}>
+                                        <div>{Math.floor(course.rating * 100) / 100}</div>
+                                        <div>{course.provider}</div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </Grid>
                     </Grid>
                 ))}
-            </Grid>
+            </GridContainer>
         </div>
     );
 }
