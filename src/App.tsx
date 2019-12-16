@@ -90,7 +90,7 @@ const App: React.FC = () => {
                     <Route exact path="/" component={SubjectListPage} />
                     <Route
                         exact
-                        path="/subject/:subjectId/:categoryId/:page?"
+                        path="/subjectCategory/:subjectId/:categoryId/:page?"
                         component={CategoryPage}
                     />
                     <AuthorizedRoute path="/user/:userId?" component={User} />
