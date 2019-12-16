@@ -70,13 +70,35 @@ const Nav = ({ pages }: Props) => {
                         </Grid>
                     </Grid>
                 ) : (
-                    <ButtonGroup>
-                        <Button color="secondary" onClick={() => history.push('/login')}>
-                            <Typography color="secondary" variant="button">
-                                Login
-                            </Typography>
-                        </Button>
-                    </ButtonGroup>
+                    <Grid container justify="space-between" style={{ margin: '0 10% 0 10%' }}>
+                        <Grid item>
+                            <ButtonGroup
+                                color="primary"
+                                size="small"
+                                aria-label="small contained button group"
+                            >
+                                <Button color="secondary" component={Link} to={'/'}>
+                                    <Typography color="secondary" variant="button">
+                                        Subjects
+                                    </Typography>
+                                </Button>
+                            </ButtonGroup>
+                        </Grid>
+                        <Grid item>
+                            <ButtonGroup>
+                                <Button color="secondary" component={Link} to={'/login'}>
+                                    <Typography color="secondary" variant="button">
+                                        Login
+                                    </Typography>
+                                </Button>
+                                <Button color="secondary" component={Link} to={'/register'}>
+                                    <Typography color="secondary" variant="button">
+                                        Register
+                                    </Typography>
+                                </Button>
+                            </ButtonGroup>
+                        </Grid>
+                    </Grid>
                 )}
             </Toolbar>
         </AppBar>

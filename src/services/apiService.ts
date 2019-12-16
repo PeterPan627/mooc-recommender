@@ -1,7 +1,7 @@
 import { auth } from 'firebase';
 import { toast } from 'react-toastify';
 
-export var URL = 'http://localhost:8080/api';
+export var URL = 'http://soczilla.eu:8080/api';
 
 function req(url: string, method = 'GET') {
     return fetch(url, { method }).then(res => {

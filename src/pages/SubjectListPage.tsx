@@ -70,7 +70,9 @@ function SubjectListPage() {
                                         )
                                         .map(cat => (
                                             <Grid key={cat} item className={classes.category}>
-                                                <Link to={`/subject/${sub['_id']}/${cat}/0`}>
+                                                <Link
+                                                    to={`/subjectCategory/${sub['_id']}/${cat}/0`}
+                                                >
                                                     {cat}
                                                 </Link>
                                             </Grid>
