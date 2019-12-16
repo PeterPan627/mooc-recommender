@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, RefObject } from 'react';
 import CoursesList from '../common/CoursesList';
 import { useParams } from 'react-router';
 import { getCourses, Course } from '../services/apiService';
-import { Button, makeStyles } from '@material-ui/core';
+import { Grid, Button, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -31,9 +31,12 @@ function SubjectPage() {
         }
     }, [pageNum, subjectId]);
     return (
-        <div>
-            <h1 ref={myRef}>{subjectId}</h1>
-            <p>some basic info about subject</p>
+        <Grid item>
+            <Grid container direction="column" justify="center" alignItems="center">
+                <h2 ref={myRef}>{subjectId}</h2>
+                <p>some basic info about subject</p>
+            </Grid>
+
             <CoursesList courses={courses} />
             <div className={classes.buttons}>
                 {pageNum > 0 && (
@@ -57,7 +60,7 @@ function SubjectPage() {
                     </Button>
                 )}
             </div>
-        </div>
+        </Grid>
     );
 }
 
