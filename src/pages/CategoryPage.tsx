@@ -17,6 +17,7 @@ const useStyles = makeStyles({
         margin: '20px 0 5% 0',
         display: 'flex',
         justifyContent: 'center',
+        width: '100%',
     },
 });
 function CategoryPage() {
@@ -34,10 +35,12 @@ function CategoryPage() {
     return (
         <Grid container>
             <Grid container direction="column" justify="center" alignItems="center">
-                <h2 ref={myRef}>{subjectId}/{categoryId}</h2>
+                <h2 ref={myRef}>
+                    {subjectId}/{categoryId}
+                </h2>
                 <p>some basic info about subject</p>
             </Grid>
-            
+
             <CoursesList courses={courses} />
             <div className={classes.buttons}>
                 {pageNum > 0 && (
@@ -47,7 +50,7 @@ function CategoryPage() {
                             scrollToRef(myRef);
                         }}
                     >
-                        <Link to={`/subject/${subjectId}/${categoryId}/${pageNum - 1}`}>
+                        <Link to={`/subjectCategory/${subjectId}/${categoryId}/${pageNum - 1}`}>
                             Previous Page
                         </Link>
                     </Button>
@@ -59,7 +62,7 @@ function CategoryPage() {
                             scrollToRef(myRef);
                         }}
                     >
-                        <Link to={`/subject/${subjectId}/${categoryId}/${pageNum + 1}`}>
+                        <Link to={`/subjectCategory/${subjectId}/${categoryId}/${pageNum + 1}`}>
                             Next Page
                         </Link>
                     </Button>
