@@ -16,40 +16,42 @@ const PersonaRecommendation: React.FC<Props> = ({ name, id, courses }) => {
             <Grid container direction="row" justify="center" alignItems="center">
                 <h2>{name}</h2>
             </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item>
-                    <Button
-                        color="primary"
-                        onClick={() => history.push('/generalRecommending/' + id)}
-                    >
-                        General Model
-                    </Button>
+            {courses && courses.length > 0 && (
+                <Grid container direction="row" justify="center" alignItems="center">
+                    <Grid item>
+                        <Button
+                            color="primary"
+                            onClick={() => history.push('/generalRecommending/' + id)}
+                        >
+                            General Model
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            color="primary"
+                            onClick={() => history.push('/overfittingRecommending/' + id)}
+                        >
+                            Overfitting
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            color="primary"
+                            onClick={() => history.push('/taxonomyRecommending/' + id)}
+                        >
+                            Taxonomy
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            color="primary"
+                            onClick={() => history.push('/categoryRecommending/' + id)}
+                        >
+                            Categories
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Button
-                        color="primary"
-                        onClick={() => history.push('/overfittingRecommending/' + id)}
-                    >
-                        Overfitting
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button
-                        color="primary"
-                        onClick={() => history.push('/taxonomyRecommending/' + id)}
-                    >
-                        Taxonomy
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button
-                        color="primary"
-                        onClick={() => history.push('/categoryRecommending/' + id)}
-                    >
-                        Categories
-                    </Button>
-                </Grid>
-            </Grid>
+            )}
             <Grid container direction="row" justify="space-evenly" alignItems="stretch">
                 {courses && courses.length > 0 ? (
                     courses.map(({ provider, name, description, id }) => (

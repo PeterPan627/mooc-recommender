@@ -16,12 +16,19 @@ import { Loader } from '../common';
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<Record<string, string> | null>(null);
     const { user, loginUser, loading } = useContext(AuthContext);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        loginUser(email, password);
+        if (password.length < 6) {
+            setError({ msg: 'Password is too short' });
+            return;
+        }
+        loginUser(email, password).catch(err => {
+            setError({ msg: err.message });
+            console.log(err);
+        });
     }
     if (loading) {
         return <Loader />;
@@ -61,18 +68,14 @@ export function Login() {
                             />
                             {error && (
                                 <Typography variant="subtitle2" color="error" paragraph>
-                                    <b>Wrong credentials</b>
+                                    <b>{error.msg}</b>
                                 </Typography>
                             )}
-                            <Typography variant="subtitle2" align="left" paragraph>
+                            {/* <Typography variant="subtitle2" align="left" paragraph>
                                 <Link>
                                     <b>Forgot email?</b>
                                 </Link>
-                            </Typography>
-                            <Typography variant="subtitle2" align="left" paragraph>
-                                Not your device? Use Guest mode to sign in privately.
-                                <Link>Learn more</Link>
-                            </Typography>
+                            </Typography> */}
                         </CardContent>
                         <CardActions>
                             <RrdLink to={'/register'}>

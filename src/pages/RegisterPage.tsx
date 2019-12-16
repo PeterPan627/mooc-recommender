@@ -18,21 +18,33 @@ function RegisterPage() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [repass, setRepass] = useState('');
-    const [error, setError] = useState({});
+    const [error, setError] = useState<Record<string, string> | null>(null);
     const { user, registerUser, loading } = useContext(AuthContext);
 
     const isAuthorized = !!user && !loading;
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        if (password.length < 6) {
+            setError({ msg: 'Password is too short' });
+            return;
+        }
+        if (name.length === 0) {
+            setError({ msg: 'Name is too short' });
+            return;
+        }
         if (password !== repass) {
             setError({ msg: 'Retype password correctly' });
             return;
         }
-        registerUser(email, password).then((user: auth.UserCredential | null) => {
-            if (user) {
-                createUser({ name, user });
-            }
-        });
+        registerUser(email, password)
+            .then((user: auth.UserCredential | null) => {
+                if (user) {
+                    createUser({ name, user });
+                }
+            })
+            .catch(err => {
+                setError({ msg: err.message });
+            });
     }
 
     return (
@@ -89,7 +101,7 @@ function RegisterPage() {
 
                                 {error && (
                                     <Typography variant="subtitle2" color="error" paragraph>
-                                        <b>Wrong credentials</b>
+                                        <b>{error.msg}</b>
                                     </Typography>
                                 )}
                             </CardContent>

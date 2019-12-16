@@ -121,7 +121,7 @@ export function createUser({ name, user }: UserRegisterForm) {
         fetch(`${URL}/createUser/${name}/${u.uid}`, { method: 'POST' })
             .then(res => res.json())
             .then(u => {
-                console.log(u);
+                toast.success('You have been successfully registered.');
             });
     }
 }
